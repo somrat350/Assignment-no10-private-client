@@ -57,7 +57,7 @@ const Footer = () => {
               </Link>
             </div>
             <div className="rounded-full p-1 border border-white hover:scale-110 duration-200">
-              <Link to="https://github.com/somrat350" target="_blank">
+              <Link to="" target="_blank">
                 <FaGithub />
               </Link>
             </div>

@@ -34,7 +34,7 @@ const NewestCars = () => {
   return (
     <section className="mt-10">
       <h2 className="text-3xl font-semibold text-center mb-5">
-        🚗 Newest Cars
+        Newest Cars
       </h2>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {cars.map((car) => (

@@ -77,7 +77,7 @@ const Header = () => {
       ) : (
         <Link
           to="/login"
-          className="btn btn-primary hover:scale-110 transition-all duration-200 font-medium text-base"
+          className="btn btn-primary hover:scale-110 transition-all duration-200 font-medium text-sm"
         >
           Login/Signup
         </Link>
@@ -87,7 +87,7 @@ const Header = () => {
   return (
     <header className="shadow-xl sticky top-0 z-20 backdrop-blur-3xl">
       <div className="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center relative">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <HiMenuAlt1
             onClick={() => setOpenMenu(true)}
             className="lg:hidden cursor-pointer text-2xl font-bold"
@@ -99,7 +99,7 @@ const Header = () => {
               className="w-10 hidden sm:flex"
             />
             <h1>
-              <Link to="/" className="text-2xl font-bold">
+              <Link to="/" className="text-xl sm:text-2xl font-bold">
                 RentWheels
               </Link>
             </h1>
