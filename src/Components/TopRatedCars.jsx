@@ -1,6 +1,6 @@
 import CarCard from "./CarCard";
 
-const NewestCars = () => {
+const TopRatedCars = () => {
   const cars = [
     {
       id: 1,
@@ -36,12 +36,11 @@ const NewestCars = () => {
         "https://images.unsplash.com/photo-1541443131876-44b03de101c5?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDJ8fGNhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=400",
     },
   ];
-
   return (
     <section className="mt-20">
       <div className="flex items-center justify-center">
         <h2 className="text-4xl font-bold text-center border-b-4 mb-5">
-          Newest Cars
+          Top Rated Cars
         </h2>
       </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -53,4 +52,4 @@ const NewestCars = () => {
   );
 };
 
-export default NewestCars;
+export default TopRatedCars;

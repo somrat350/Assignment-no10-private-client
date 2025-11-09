@@ -1,7 +1,11 @@
 const WhyRent = () => {
   return (
-    <section className="mt-10">
-      <h2 className="text-3xl font-semibold text-center mb-5">Why Rent With Us?</h2>
+    <section className="mt-20">
+      <div className="flex items-center justify-center">
+        <h2 className="text-4xl font-bold text-center border-b-4 mb-5">
+          Why Rent With Us?
+        </h2>
+      </div>
       <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-5 text-center">
         <div className="rounded-lg shadow-xl p-2">
           <div className="w-16 h-16 mx-auto mb-4 bg-blue-300 rounded-full flex items-center justify-center">
