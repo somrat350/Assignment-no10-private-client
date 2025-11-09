@@ -29,3 +29,49 @@
 .navLink.active::before {
   width: 100%;
 }
+
+
+/* Base style for next & prev buttons */
+.swiper-button-next,
+.swiper-button-prev {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff !important;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+/* Change the arrow icon size */
+/* .swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 40px !important;
+  font-weight: bold !important;
+} */
+
+/* Hover effect */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: #422ad5;
+  transform: scale(1.1);
+}
+
+/* Adjust position if needed */
+.swiper-button-next {
+  right: 15px !important;
+}
+
+.swiper-button-prev {
+  left: 15px !important;
+}
+
+/* Optional: make pagination dots match your theme */
+.swiper-pagination-bullet {
+  opacity: 0.7;
+}
+
+.swiper-pagination-bullet-active {
+  background: #422ad5 !important;
+  opacity: 1;
+}
