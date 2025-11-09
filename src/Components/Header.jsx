@@ -9,7 +9,7 @@ const Header = () => {
   const user = false;
 
   const get = localStorage.getItem("assignment-no10-private-theme");
-  const getTheme = JSON.parse(get ? get : "true");
+  const getTheme = JSON.parse(get ? get : "false");
 
   const [theme, setTheme] = useState(getTheme);
 
@@ -85,7 +85,7 @@ const Header = () => {
     </>
   );
   return (
-    <header className="shadow-xl">
+    <header className="shadow-xl sticky top-0 z-20 backdrop-blur-3xl">
       <div className="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center relative">
         <div className="flex items-center gap-3">
           <HiMenuAlt1
