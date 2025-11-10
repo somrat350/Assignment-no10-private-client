@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 const CarCard = ({ car }) => {
   return (
-    <div className="shadow-xl rounded-2xl p-4 hover:shadow-2xl hover:scale-105 transition-all duration-300">
+    <div className="shadow-xl rounded-2xl p-4 hover:shadow-2xl hover:-translate-y-4 transition-all duration-400">
       {/* Car Image */}
       <div className="w-full h-48 rounded-xl overflow-hidden relative">
         <img
