@@ -74,7 +74,7 @@ const Testimonials = () => {
       </div>
 
       <Swiper
-        // slidesPerView={1}
+        slidesPerView={1}
         spaceBetween={10}
         loop={true}
         autoplay={{

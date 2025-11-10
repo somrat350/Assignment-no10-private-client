@@ -9,8 +9,8 @@ const Home = () => {
     <div className="max-w-7xl mx-auto p-5">
       <HeroSlider />
       <NewestCars />
-      <TopRatedCars />
       <WhyRent />
+      <TopRatedCars />
       <Testimonials />
     </div>
   );
