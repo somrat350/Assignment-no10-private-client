@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { HiXMark } from "react-icons/hi2";
 import { Link, NavLink } from "react-router";
 import ThemeToggler from "./ThemeToggler";
+import { AuthContext } from "../Context/AuthContext/AuthContext";
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
-  const user = false;
+  const { user, userLoading, logout } = useContext(AuthContext);
 
   const get = localStorage.getItem("assignment-no10-private-theme");
   const getTheme = JSON.parse(get ? get : "false");
@@ -50,24 +51,29 @@ const Header = () => {
       <div className="hidden sm:flex justify-center">
         <ThemeToggler theme={theme} setTheme={setTheme} />
       </div>
-      {user ? (
+      {userLoading ? (
+        ""
+      ) : user ? (
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="m-1 cursor-pointer">
             <img src="/user.png" alt="" className="w-10 h-10 cursor-pointer" />
           </div>
           <ul
             tabIndex="-1"
-            className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+            className="dropdown-content menu bg-base-100 rounded-box z-1 w-fit p-2 shadow-sm"
           >
             <li>
-              <span>display name</span>
+              <span>{user?.displayName}</span>
             </li>
             <li>
-              <span>email name</span>
+              <span>{user?.email}</span>
             </li>
             <li>
               <span className="block">
-                <button className="btn btn-error text-white w-full">
+                <button
+                  onClick={logout}
+                  className="btn btn-error text-white w-full"
+                >
                   Log Out
                 </button>
               </span>
@@ -119,7 +125,7 @@ const Header = () => {
           <div className="flex flex-col gap-5">{middleMenu}</div>
         </div>
         <div className="hidden lg:flex gap-6 items-center">{middleMenu}</div>
-        <div className="flex items-center gap-3">{rightMenu}</div>
+        <div className="flex items-center gap-3 h-10">{rightMenu}</div>
       </div>
     </header>
   );

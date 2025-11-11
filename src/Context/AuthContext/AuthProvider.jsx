@@ -7,6 +7,7 @@ import {
   onAuthStateChanged,
   reload,
   signInWithPopup,
+  signOut,
   updateProfile,
 } from "firebase/auth";
 
@@ -41,6 +42,11 @@ const AuthProvider = ({ children }) => {
       });
   };
 
+  const logout = () => {
+    setUserLoading(true);
+    return signOut(auth);
+  };
+
   useEffect(() => {
     const userState = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -50,7 +56,14 @@ const AuthProvider = ({ children }) => {
       userState();
     };
   }, []);
-  const authInfo = { user, userLoading, createUG, createUEP, updateUser };
+  const authInfo = {
+    user,
+    userLoading,
+    createUG,
+    createUEP,
+    updateUser,
+    logout,
+  };
 
   return <AuthContext value={authInfo}>{children}</AuthContext>;
 };
