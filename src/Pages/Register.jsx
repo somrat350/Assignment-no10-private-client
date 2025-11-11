@@ -1,13 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash, FaImage, FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router";
-import { AuthContext } from "../Context/AuthContext/AuthContext";
 import { toast } from "react-toastify";
+import useAuth from "../Hooks/useAuth";
 
 const Register = () => {
   const { user, userLoading, setUserLoading, createUG, createUEP, updateUser } =
-    useContext(AuthContext);
+    useAuth();
 
   const location = useLocation();
   const navigate = useNavigate();

@@ -1,13 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { HiXMark } from "react-icons/hi2";
 import { Link, NavLink } from "react-router";
 import ThemeToggler from "./ThemeToggler";
-import { AuthContext } from "../Context/AuthContext/AuthContext";
+import useAuth from "../Hooks/useAuth";
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
-  const { user, userLoading, logout } = useContext(AuthContext);
+  const { user, userLoading, logout } = useAuth();
 
   const get = localStorage.getItem("assignment-no10-private-theme");
   const getTheme = JSON.parse(get ? get : "false");

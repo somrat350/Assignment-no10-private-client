@@ -1,13 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router";
-import { AuthContext } from "../Context/AuthContext/AuthContext";
 import { toast } from "react-toastify";
+import useAuth from "../Hooks/useAuth";
 
 const Login = () => {
-  const { user, userLoading, setUserLoading, loginUEP, createUG } =
-    useContext(AuthContext);
+  const { user, userLoading, setUserLoading, loginUEP, createUG } = useAuth();
   const [passwordType, setPasswordType] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();

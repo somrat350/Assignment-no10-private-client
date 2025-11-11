@@ -1,14 +1,14 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../Context/AuthContext/AuthContext";
+import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import useAuth from "../Hooks/useAuth";
 
 const AddCar = () => {
-  const { user, userLoading } = useContext(AuthContext);
+  const { user, userLoading } = useAuth();
   const [carImg, setCarImg] = useState("");
   const [category, setCategory] = useState("Pick a type");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   if (userLoading) return;
 
@@ -27,13 +27,12 @@ const AddCar = () => {
       providerEmail: user?.email,
     };
 
-    axios.post("http://localhost:3000/newCar",newCar)
-    .then(result=>{
-      if(result.data.insertedId){
-        toast.success("New service created successfully.")
-        navigate("/myListings")
+    axios.post("http://localhost:3000/newCar", newCar).then((result) => {
+      if (result.data.insertedId) {
+        toast.success("New service created successfully.");
+        navigate("/myListings");
       }
-    })
+    });
   };
   return (
     <section className="max-w-7xl mx-auto p-5">
