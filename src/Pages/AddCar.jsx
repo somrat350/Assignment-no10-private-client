@@ -1,7 +1,40 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../Context/AuthContext/AuthContext";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 const AddCar = () => {
-  const [carImg, setCarImg] = useState("")
+  const { user, userLoading } = useContext(AuthContext);
+  const [carImg, setCarImg] = useState("");
+  const [category, setCategory] = useState("Pick a type");
+  const navigate = useNavigate()
+
+  if (userLoading) return;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newCar = {
+      carName: e.target.carName.value,
+      carCategory: category,
+      rentPrice: e.target.rentPrice.value,
+      location: e.target.location.value,
+      carDesc: e.target.carDesc.value,
+      carImageUrl: carImg,
+      status: true,
+      createdAt: new Date().toISOString(),
+      providerName: user?.displayName,
+      providerEmail: user?.email,
+    };
+
+    axios.post("http://localhost:3000/newCar",newCar)
+    .then(result=>{
+      if(result.data.insertedId){
+        toast.success("New service created successfully.")
+        navigate("/myListings")
+      }
+    })
+  };
   return (
     <section className="max-w-7xl mx-auto p-5">
       <div className="flex items-center justify-center">
@@ -10,7 +43,7 @@ const AddCar = () => {
         </h2>
       </div>
 
-      <form className="my-10">
+      <form onSubmit={handleSubmit} className="my-10">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 md:gap-5">
           {/* Seller Name */}
           <div className="flex flex-col gap-2">
@@ -19,7 +52,7 @@ const AddCar = () => {
               type="text"
               name="providerName"
               className="input border-gray-500 w-full"
-              value={"Mr.osama"}
+              value={user?.displayName}
               readOnly
             />
           </div>
@@ -31,7 +64,7 @@ const AddCar = () => {
               type="text"
               name="providerEmail"
               className="input border-gray-500 w-full"
-              value={"mdsomratsordaro350@gmail.com"}
+              value={user?.email}
               readOnly
             />
           </div>
@@ -54,14 +87,15 @@ const AddCar = () => {
             <select
               required
               className="select border-gray-500 w-full"
-              // onChange={(e) => setCategory(e.target.value)}
+              defaultValue={category}
+              onChange={(e) => setCategory(e.target.value)}
             >
               <option disabled={true}>Pick a type</option>
-              <option>category</option>
-              <option>category</option>
-              <option>category</option>
-              <option>category</option>
-              <option>category</option>
+              <option>Sedan</option>
+              <option>SUV</option>
+              <option>Hatchback</option>
+              <option>Luxury</option>
+              <option>Electric</option>
             </select>
           </div>
 
@@ -76,6 +110,8 @@ const AddCar = () => {
               placeholder="example: 10000"
             />
           </div>
+
+          {/* Location */}
           <div className="flex flex-col gap-2">
             <label className="label">Location</label>
             <input
@@ -86,10 +122,10 @@ const AddCar = () => {
               placeholder="example: City, Country"
             />
           </div>
+
+          {/* Description */}
           <div className="col-span-full flex flex-col gap-2">
-            <label className="label">
-              Simple Description about your Car
-            </label>
+            <label className="label">Simple Description about your Car</label>
             <textarea
               className="textarea border-gray-500 w-full"
               required
@@ -97,6 +133,8 @@ const AddCar = () => {
               placeholder="example: Car license, Car brand, Car model. etc"
             ></textarea>
           </div>
+
+          {/* Car image */}
           <div className="col-span-full flex flex-col gap-2">
             <label className="label">Your Car Image URL</label>
             <input
@@ -109,9 +147,13 @@ const AddCar = () => {
             />
           </div>
           <div className="col-span-full flex items-center justify-center">
-            {
-              carImg && <img src={carImg} alt="" className="w-full max-w-sm mx-auto rounded-2xl" />
-            }
+            {carImg && (
+              <img
+                src={carImg}
+                alt=""
+                className="w-full max-w-sm mx-auto rounded-2xl"
+              />
+            )}
           </div>
 
           <div className="col-span-full">
