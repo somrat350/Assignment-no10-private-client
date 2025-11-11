@@ -1,11 +1,12 @@
 import { useState } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import useAuth from "../Hooks/useAuth";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const AddCar = () => {
   const { user, userLoading } = useAuth();
+  const instanceSecure = useAxiosSecure();
   const [carImg, setCarImg] = useState("");
   const [category, setCategory] = useState("Pick a type");
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const AddCar = () => {
       providerEmail: user?.email,
     };
 
-    axios.post("http://localhost:3000/newCar", newCar).then((result) => {
+    instanceSecure.post("http://localhost:3000/newCar", newCar).then((result) => {
       if (result.data.insertedId) {
         toast.success("New service created successfully.");
         navigate("/myListings");
