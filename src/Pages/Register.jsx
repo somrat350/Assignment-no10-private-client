@@ -1,8 +1,102 @@
-import { FaEyeSlash, FaImage, FaUser } from "react-icons/fa";
+import { useContext, useEffect, useState } from "react";
+import { FaEye, FaEyeSlash, FaImage, FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
+import { AuthContext } from "../Context/AuthContext/AuthContext";
+import { toast } from "react-toastify";
 
 const Register = () => {
+  const { user, userLoading, setUserLoading, createUG, createUEP, updateUser } =
+    useContext(AuthContext);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
+
+  const [passValidateText, setPassValidateText] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordType, setPasswordType] = useState(true);
+
+  useEffect(() => {
+    if (user && !userLoading) {
+      navigate(from, { replace: true });
+    }
+  }, [user, userLoading, navigate, from]);
+
+  if (userLoading) return <span>Loading...</span>;
+
+  const passwordValidate = (e) => {
+    const tempPass = e.target.value;
+
+    if (!/[a-z]/.test(tempPass)) {
+      setPassValidateText("Password must contain lowercase.");
+      return;
+    } else if (!/[A-Z]/.test(tempPass)) {
+      setPassValidateText("Password must contain Uppercase.");
+      return;
+    } else if (tempPass.length < 6) {
+      setPassValidateText("Password must 6 letters.");
+      return;
+    } else {
+      setPassValidateText("");
+      setPassword(tempPass);
+      return;
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const photoUrl = e.target.photoUrl.value;
+
+    if (!password) {
+      toast.error("Please enter validate password!");
+      return;
+    }
+
+    const updatedObj = {
+      displayName: name,
+      photoURL: photoUrl,
+    };
+
+    createUEP(email, password)
+      .then(() => {
+        return updateUser(updatedObj);
+      })
+      .then(() => {
+        navigate(from, { replace: true });
+        toast.success("Register successful.");
+      })
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          navigate("/login");
+          toast.error(
+            "This email is already registered. Please log in instead."
+          );
+        } else {
+          toast.error(error.message);
+        }
+      })
+      .finally(() => {
+        setUserLoading(false);
+      });
+  };
+
+  const handleCreateGoogle = () => {
+    createUG()
+      .then(() => {
+        navigate(from, { replace: true });
+        toast.success("Sign Up successful.");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      })
+      .finally(() => {
+        setUserLoading(false);
+      });
+  };
+
   return (
     <div className="max-w-7xl mx-auto p-5 flex items-center justify-center">
       <div className="w-full max-w-3xl mx-auto rounded-2xl overflow-hidden ">
@@ -21,8 +115,10 @@ const Register = () => {
           </div>
 
           <div className="sm:w-1/2 flex flex-col gap-4 p-2 sm:p-5 justify-center">
-            <h2 className="text-4xl font-bold text-center text-black">Register</h2>
-            <form className="flex flex-col gap-3">
+            <h2 className="text-4xl font-bold text-center text-black">
+              Register
+            </h2>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               {/* Name */}
               <div className="relative">
                 <input
@@ -59,16 +155,27 @@ const Register = () => {
               {/* Password */}
               <div className="relative">
                 <input
-                  type="password"
+                  onChange={passwordValidate}
+                  type={passwordType ? "password" : "text"}
                   name="password"
                   placeholder="Password"
                   className="w-full h-10 ps-2 pe-8 border border-gray-400 rounded-sm outline-none text-gray-600 font-medium"
                   required
                 />
-                <FaEyeSlash className="absolute top-1/4 right-2 text-gray-600 cursor-pointer" />
+                {passwordType ? (
+                  <FaEyeSlash
+                    onClick={() => setPasswordType(!passwordType)}
+                    className="absolute top-1/4 right-2 text-gray-600 cursor-pointer"
+                  />
+                ) : (
+                  <FaEye
+                    onClick={() => setPasswordType(!passwordType)}
+                    className="absolute top-1/4 right-2 text-gray-600 cursor-pointer"
+                  />
+                )}
               </div>
               <span className="text-[12px] text-right text-red-500">
-                Must contain at least one uppercase letter
+                {passValidateText}
               </span>
               <button className="btn btn-primary border-none text-lg font-medium">
                 Register
@@ -79,7 +186,10 @@ const Register = () => {
               <span className="text-gray-600">or</span>
               <div className="h-0.5 w-12 bg-gray-400"></div>
             </div>
-            <button className="btn bg-black text-white border-black">
+            <button
+              onClick={handleCreateGoogle}
+              className="btn bg-black text-white border-black"
+            >
               <svg
                 aria-label="Google logo"
                 width="24"
