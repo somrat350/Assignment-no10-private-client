@@ -9,6 +9,7 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Error404 from "../Pages/Error404";
 import CarDetails from "../Pages/CarDetails";
+import PrivetRouter from "./PrivateRouter";
 
 export const router = createBrowserRouter([
   {
@@ -25,19 +26,35 @@ export const router = createBrowserRouter([
       },
       {
         path: "/car/:id",
-        Component: CarDetails,
+        element: (
+          <PrivetRouter>
+            <CarDetails />
+          </PrivetRouter>
+        ),
       },
       {
         path: "/addCar",
-        Component: AddCar,
+        element: (
+          <PrivetRouter>
+            <AddCar />
+          </PrivetRouter>
+        ),
       },
       {
         path: "/myListings",
-        Component: MyListings,
+        element: (
+          <PrivetRouter>
+            <MyListings />
+          </PrivetRouter>
+        ),
       },
       {
         path: "/myBookings",
-        Component: MyBookings,
+        element: (
+          <PrivetRouter>
+            <MyBookings />
+          </PrivetRouter>
+        ),
       },
       {
         path: "/login",
