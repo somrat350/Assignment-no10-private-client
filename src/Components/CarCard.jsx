@@ -13,10 +13,10 @@ const CarCard = ({ car }) => {
         />
         <span
           className={`text-white font-medium ${
-            car.status ? "bg-green-600" : "bg-primary"
+            car.status ? "bg-green-600" : "bg-red-600"
           } absolute top-0 right-0 rounded-tr-xl rounded-bl-4xl px-5 py-1`}
         >
-          {car.status ? "Available" : "Unavailable"}
+          {car.status ? "Available" : "Booked"}
         </span>
       </div>
 
