@@ -8,6 +8,7 @@ import MyBookings from "../Pages/MyBookings";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Error404 from "../Pages/Error404";
+import CarDetails from "../Pages/CarDetails";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
       {
         path: "/allCars",
         Component: AllCars,
+      },
+      {
+        path: "/car/:id",
+        Component: CarDetails,
       },
       {
         path: "/addCar",
