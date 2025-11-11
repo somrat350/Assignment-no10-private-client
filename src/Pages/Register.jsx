@@ -1,8 +1,8 @@
-import { FaEyeSlash } from "react-icons/fa";
+import { FaEyeSlash, FaImage, FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link } from "react-router";
 
-const Login = () => {
+const Register = () => {
   return (
     <div className="max-w-7xl mx-auto p-5 flex items-center justify-center">
       <div className="w-full max-w-3xl mx-auto rounded-2xl overflow-hidden ">
@@ -11,18 +11,41 @@ const Login = () => {
             <h2 className="text-3xl sm:text-4xl font-bold text-center">
               Hello, Welcome!
             </h2>
-            <p>Don't have an account?</p>
+            <p>Already have an account?</p>
             <Link
-              to="/register"
+              to="/login"
               className="btn border-none text-xl font-medium text-primary bg-white rounded-full"
             >
-              Register
+              Login
             </Link>
           </div>
 
           <div className="sm:w-1/2 flex flex-col gap-4 p-2 sm:p-5 justify-center">
-            <h2 className="text-4xl font-bold text-center text-black">LogIn</h2>
+            <h2 className="text-4xl font-bold text-center text-black">Register</h2>
             <form className="flex flex-col gap-3">
+              {/* Name */}
+              <div className="relative">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  className="w-full h-10 ps-2 pe-8 border border-gray-400 rounded-sm outline-none text-gray-600 font-medium"
+                  required
+                />
+                <FaUser className="absolute top-1/4 right-2 text-gray-600" />
+              </div>
+              {/* Photo url */}
+              <div className="relative">
+                <input
+                  type="text"
+                  name="photoUrl"
+                  placeholder="Photo URL"
+                  className="w-full h-10 ps-2 pe-8 border border-gray-400 rounded-sm outline-none text-gray-600 font-medium"
+                  required
+                />
+                <FaImage className="absolute top-1/4 right-2 text-gray-600" />
+              </div>
+              {/* Email */}
               <div className="relative">
                 <input
                   type="email"
@@ -33,6 +56,7 @@ const Login = () => {
                 />
                 <MdEmail className="absolute top-1/4 right-2 text-gray-600" />
               </div>
+              {/* Password */}
               <div className="relative">
                 <input
                   type="password"
@@ -43,11 +67,11 @@ const Login = () => {
                 />
                 <FaEyeSlash className="absolute top-1/4 right-2 text-gray-600 cursor-pointer" />
               </div>
-              <span className="text-gray-600 text-sm w-fit ml-auto cursor-pointer">
-                Forgot password?
+              <span className="text-[12px] text-right text-red-500">
+                Must contain at least one uppercase letter
               </span>
               <button className="btn btn-primary border-none text-lg font-medium">
-                Login
+                Register
               </button>
             </form>
             <div className="flex items-center justify-center gap-2">
@@ -91,4 +115,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

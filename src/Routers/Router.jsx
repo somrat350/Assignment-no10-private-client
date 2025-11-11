@@ -6,6 +6,7 @@ import AddCar from "../Pages/AddCar";
 import MyListings from "../Pages/MyListings";
 import MyBookings from "../Pages/MyBookings";
 import Login from "../Pages/Login";
+import Register from "../Pages/Register";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: "/login",
         Component: Login,
+      },
+      {
+        path: "/register",
+        Component: Register,
       },
     ],
   },
