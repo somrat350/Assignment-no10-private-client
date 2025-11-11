@@ -7,39 +7,43 @@ const CarCard = ({ car }) => {
       {/* Car Image */}
       <div className="w-full h-48 rounded-xl overflow-hidden relative">
         <img
-          src={car.image}
-          alt={car.name}
+          src={car.carImageUrl}
+          alt={car.carName}
           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
         />
-        <span className="text-white font-medium bg-primary absolute top-0 right-0 rounded-tr-xl rounded-bl-4xl px-5 py-1">
-          {car.status}
+        <span
+          className={`text-white font-medium ${
+            car.status ? "bg-green-600" : "bg-primary"
+          } absolute top-0 right-0 rounded-tr-xl rounded-bl-4xl px-5 py-1`}
+        >
+          {car.status ? "Available" : "Unavailable"}
         </span>
       </div>
 
       {/* Car Info */}
       <div className="mt-4 space-y-2">
-        <h3 className="text-xl font-semibold">{car.name}</h3>
+        <h3 className="text-xl font-semibold">{car.carName}</h3>
         <div className="flex justify-between items-center">
           <p className="text-lg font-medium text-primary">
-            ৳{car.pricePerDay} / day
+            ৳{car.rentPrice} / day
           </p>
-          <p className="text-lg font-medium ">⭐{car.rate}</p>
+          <p className="text-lg font-medium ">⭐{car.ratings}</p>
         </div>
 
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2 text-gray-500">
-            <FaCar size={18} /> <span>{car.model}</span>
+            <FaCar size={18} /> <span>{car.carCategory}</span>
           </div>
 
           <div className="flex items-center gap-2 text-gray-500">
-            <FaUser size={18} /> <span>{car.provider}</span>
+            <FaUser size={18} /> <span>{car.providerName}</span>
           </div>
         </div>
       </div>
 
       {/* Button */}
       <div className="mt-4">
-        <Link to={`/car/${car.id}`} className="btn btn-primary w-full">
+        <Link to={`/car/${car._id}`} className="btn btn-primary w-full">
           View Details
         </Link>
       </div>

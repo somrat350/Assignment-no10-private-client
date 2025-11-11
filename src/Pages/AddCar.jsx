@@ -22,18 +22,21 @@ const AddCar = () => {
       location: e.target.location.value,
       carDesc: e.target.carDesc.value,
       carImageUrl: carImg,
+      ratings: 0,
       status: true,
       createdAt: new Date().toISOString(),
       providerName: user?.displayName,
       providerEmail: user?.email,
     };
 
-    instanceSecure.post("http://localhost:3000/newCar", newCar).then((result) => {
-      if (result.data.insertedId) {
-        toast.success("New service created successfully.");
-        navigate("/myListings");
-      }
-    });
+    instanceSecure
+      .post("http://localhost:3000/newCar", newCar)
+      .then((result) => {
+        if (result.data.insertedId) {
+          toast.success("New service created successfully.");
+          navigate("/myListings");
+        }
+      });
   };
   return (
     <section className="max-w-7xl mx-auto p-5">
