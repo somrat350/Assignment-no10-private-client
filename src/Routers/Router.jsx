@@ -5,6 +5,7 @@ import AllCars from "../Pages/AllCars";
 import AddCar from "../Pages/AddCar";
 import MyListings from "../Pages/MyListings";
 import MyBookings from "../Pages/MyBookings";
+import Login from "../Pages/Login";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: "/myBookings",
         Component: MyBookings,
+      },
+      {
+        path: "/login",
+        Component: Login,
       },
     ],
   },
