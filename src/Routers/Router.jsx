@@ -7,6 +7,7 @@ import MyListings from "../Pages/MyListings";
 import MyBookings from "../Pages/MyBookings";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import Error404 from "../Pages/Error404";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         Component: Register,
+      },
+      {
+        path: "/*",
+        Component: Error404,
       },
     ],
   },
