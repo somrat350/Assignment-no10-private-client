@@ -7,11 +7,12 @@ const AllCars = () => {
   const instance = useAxios();
   const [cars, setCars] = useState([]);
   const [src, setSrc] = useState("");
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(true);
 
   useEffect(() => {
     instance.get("/allCars").then((result) => {
       setCars(result.data);
+      setLoad(false);
     });
   }, [instance]);
 
@@ -76,8 +77,8 @@ const AllCars = () => {
       {load ? (
         <Loading />
       ) : finalCars.length === 0 ? (
-        <h2 data-aos="fade-up" className="mt-10 text-center font-bold text-2xl">
-          Search not matched!
+        <h2 className="mt-10 text-center font-bold text-2xl">
+          Data not found!
         </h2>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">

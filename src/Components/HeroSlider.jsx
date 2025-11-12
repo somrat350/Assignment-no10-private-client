@@ -9,14 +9,17 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Link } from "react-router";
 import useAxios from "../Hooks/useAxios";
 import { useEffect, useState } from "react";
+import Loading from "./Loading";
 
 const HeroSlider = () => {
   const instance = useAxios();
   const [sliders, setSliders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     instance.get("/heroSlider").then((result) => {
       setSliders(result.data);
+      setLoading(false);
     });
   }, [instance]);
   return (
@@ -35,26 +38,36 @@ const HeroSlider = () => {
       modules={[Autoplay, Pagination, Navigation]}
       className="w-full bg-[#101214]/20 rounded-lg p-5"
     >
-      {sliders.map((slider) => (
-        <SwiperSlide key={slider._id}>
-          <div className="p-5 flex flex-col-reverse sm:flex-row gap-3 sm:gap-10 items-center justify-center">
-            <div className="flex-1 flex flex-col gap-4 max-w-md">
-              <h2 className="text-3xl font-semibold">{slider.carName}</h2>
-              <p className="text-lg font-medium line-clamp-3">{slider.carDesc}</p>
-              <Link to={`/car/${slider._id}`} className="btn btn-primary">
-                Book Now
-              </Link>
+      {loading ? (
+        <Loading />
+      ) : sliders.length === 0 ? (
+        <h2 className="mt-10 text-center font-bold text-2xl">
+          Data not found!
+        </h2>
+      ) : (
+        sliders.map((slider) => (
+          <SwiperSlide key={slider._id}>
+            <div className="p-5 flex flex-col-reverse sm:flex-row gap-3 sm:gap-10 items-center justify-center">
+              <div className="flex-1 flex flex-col gap-4 max-w-md">
+                <h2 className="text-3xl font-semibold">{slider.carName}</h2>
+                <p className="text-lg font-medium line-clamp-3">
+                  {slider.carDesc}
+                </p>
+                <Link to={`/car/${slider._id}`} className="btn btn-primary">
+                  Book Now
+                </Link>
+              </div>
+              <div className="flex-1 w-full max-w-sm flex items-center justify-center">
+                <img
+                  className="w-full rounded-2xl"
+                  src={slider.carImageUrl}
+                  alt={slider.carName}
+                />
+              </div>
             </div>
-            <div className="flex-1 w-full max-w-sm flex items-center justify-center">
-              <img
-                className="w-full rounded-2xl"
-                src={slider.carImageUrl}
-                alt={slider.carName}
-              />
-            </div>
-          </div>
-        </SwiperSlide>
-      ))}
+          </SwiperSlide>
+        ))
+      )}
     </Swiper>
   );
 };

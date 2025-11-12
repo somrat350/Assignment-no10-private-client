@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import useAxios from "../Hooks/useAxios";
 import CarCard from "./CarCard";
+import Loading from "./Loading";
 
 const NewestCars = () => {
   const instance = useAxios();
   const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     instance.get("/newestCars").then((result) => {
       setCars(result.data);
+      setLoading(false);
     });
   }, [instance]);
 
@@ -19,11 +22,19 @@ const NewestCars = () => {
           Newest Cars
         </h2>
       </div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {cars.map((car) => (
-          <CarCard key={car._id} car={car} />
-        ))}
-      </div>
+      {loading ? (
+        <Loading />
+      ) : cars.length === 0 ? (
+        <h2 className="mt-10 text-center font-bold text-2xl">
+          Data not found!
+        </h2>
+      ) : (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {cars.map((car) => (
+            <CarCard key={car._id} car={car} />
+          ))}
+        </div>
+      )}
     </section>
   );
 };
