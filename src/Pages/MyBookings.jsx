@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import useAuth from "../Hooks/useAuth";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import Loading from "../Components/Loading";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 const MyBookings = () => {
   const instanceSecure = useAxiosSecure();
@@ -15,6 +17,45 @@ const MyBookings = () => {
       setLoading(false);
     });
   }, [instanceSecure, user]);
+
+  const handleRate = (carId) => {
+    toast(carId);
+  };
+
+  const handleRemove = (id, carId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, remove it!",
+    }).then((toastResult) => {
+      console.log(toastResult);
+      if (toastResult.isConfirmed) {
+        const updateCarStatus = { status: true };
+        instanceSecure
+          .patch(`/updateCar/${carId}`, updateCarStatus)
+          .then((result) => {
+            console.log(result);
+            if (result.data.modifiedCount === 1) {
+              instanceSecure.delete(`/deleteBookedCar/${id}`).then((result) => {
+                if (result.data.deletedCount > 0) {
+                  const remainingCar = cars.filter((car) => car._id !== id);
+                  setCars(remainingCar);
+                  Swal.fire({
+                    title: "Removed!",
+                    text: "Your booked car has been removed.",
+                    icon: "success",
+                  });
+                }
+              });
+            }
+          });
+      }
+    });
+  };
 
   return (
     <section className="max-w-7xl mx-auto p-5">
@@ -32,7 +73,7 @@ const MyBookings = () => {
         </h2>
       ) : (
         <>
-          <div className="mt-10 hidden sm:block">
+          <div className="mt-10 hidden md:block">
             <table className="table">
               <thead>
                 <tr>
@@ -41,11 +82,12 @@ const MyBookings = () => {
                   <th>Car Name</th>
                   <th>Category</th>
                   <th>Rent Price</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {cars.map((car, index) => (
-                  <tr key={car._id}>
+                  <tr key={car._id} className="border-b border-gray-400">
                     <th>{index + 1}</th>
                     <td>
                       <img
@@ -59,28 +101,54 @@ const MyBookings = () => {
                     <td className="font-medium text-base">
                       ৳{car.rentPrice}/day
                     </td>
+                    <td className="font-medium text-base flex flex-col gap-2">
+                      <button
+                        onClick={() => handleRate(car.carId)}
+                        className="btn btn-success text-white"
+                      >
+                        Rate this
+                      </button>
+                      <button
+                        onClick={() => handleRemove(car._id, car.carId)}
+                        className="btn btn-error text-white"
+                      >
+                        Remove
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <div className="mt-10 grid grid-cols-2 gap-5 sm:hidden">
+          <div className="mt-10 grid sm:grid-cols-2 gap-5 md:hidden">
             {cars.map((car) => (
               <div key={car._id} className="flex flex-col gap-2">
-                <div className="w-full h-36 rounded-xl overflow-hidden">
+                <div className="w-full h-40 rounded-xl overflow-hidden">
                   <img
                     src={car.carImageUrl}
                     alt={car.carName}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col gap-1">
                   <h2 className="font-medium">{car.carName}</h2>
                   <div className="flex gap-2 items-center">
                     <h2 className="text-base">{car.carCategory}</h2>
                   </div>
                   <h2 className="text-sm">৳{car.rentPrice} / day</h2>
+                  <button
+                    onClick={() => handleRate(car.carId)}
+                    className="btn btn-success text-white"
+                  >
+                    Rate this
+                  </button>
+                  <button
+                    onClick={() => handleRemove(car._id, car.carId)}
+                    className="btn btn-error text-white"
+                  >
+                    Remove
+                  </button>
                 </div>
               </div>
             ))}
