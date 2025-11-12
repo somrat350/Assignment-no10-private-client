@@ -3,10 +3,12 @@ import useAuth from "../Hooks/useAuth";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
+import useAxios from "../Hooks/useAxios";
 
 const EditCar = () => {
   const { user, userLoading } = useAuth();
   const instanceSecure = useAxiosSecure();
+  const instance = useAxios();
   const navigate = useNavigate();
   const { id } = useParams();
   const [car, setCar] = useState({});
@@ -14,12 +16,12 @@ const EditCar = () => {
   const [carImg, setCarImg] = useState("");
 
   useEffect(() => {
-    instanceSecure.get(`/car/${id}`).then((result) => {
+    instance.get(`/car/${id}`).then((result) => {
       setCar(result.data);
       setCategory(result.data.carCategory);
       setCarImg(result.data.carImageUrl);
     });
-  }, [instanceSecure, id]);
+  }, [instance, id]);
 
   if (userLoading) return;
 

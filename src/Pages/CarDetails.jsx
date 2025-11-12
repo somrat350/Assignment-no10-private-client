@@ -14,10 +14,12 @@ import useAxios from "../Hooks/useAxios";
 import { useEffect, useState } from "react";
 import useAuth from "../Hooks/useAuth";
 import { toast } from "react-toastify";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const CarDetails = () => {
   const { user } = useAuth();
   const instance = useAxios();
+  const instanceSecure = useAxiosSecure();
   const { id } = useParams();
   const [details, setDetails] = useState({});
   const navigate = useNavigate();
@@ -42,11 +44,11 @@ const CarDetails = () => {
       bookingEmail: user.email,
     };
 
-    instance.post("/newBooking", newBooking).then((result) => {
+    instanceSecure.post("/newBooking", newBooking).then((result) => {
       console.log(result);
       if (result.data.insertedId) {
         const updateCarStatus = { status: false };
-        instance
+        instanceSecure
           .patch(`/updateCar/${details._id}`, updateCarStatus)
           .then((result) => {
             console.log(result);
