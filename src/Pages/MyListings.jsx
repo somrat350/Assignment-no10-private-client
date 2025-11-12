@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import useAuth from "../Hooks/useAuth";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const MyListings = () => {
   const instanceSecure = useAxiosSecure();
@@ -13,6 +14,33 @@ const MyListings = () => {
       setCars(result.data);
     });
   }, [instanceSecure, user]);
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((toastResult) => {
+      console.log(toastResult);
+      if (toastResult.isConfirmed) {
+        instanceSecure.delete(`/deleteCar/${id}`).then((result) => {
+          if (result.data.deletedCount > 0) {
+            const remainingCar = cars.filter((car) => car._id !== id);
+            setCars(remainingCar);
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your car has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
+  };
   return (
     <section className="max-w-7xl mx-auto p-5">
       <div className="flex items-center justify-center">
@@ -64,7 +92,12 @@ const MyListings = () => {
                   >
                     Edit
                   </Link>
-                  <button className="btn btn-outline btn-error">Delete</button>
+                  <button
+                    onClick={() => handleDelete(car._id)}
+                    className="btn btn-outline btn-error"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
@@ -106,7 +139,12 @@ const MyListings = () => {
               >
                 Edit
               </Link>
-              <button className="btn btn-outline btn-error">Delete</button>
+              <button
+                onClick={() => handleDelete(car._id)}
+                className="btn btn-outline btn-error"
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))}
