@@ -1,18 +1,18 @@
-import { FaCar, FaUser } from "react-icons/fa";
 import { Link } from "react-router";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import useAuth from "../Hooks/useAuth";
+import { useEffect, useState } from "react";
 
 const MyListings = () => {
-  const car = {
-    id: 1,
-    name: "Toyota Corolla",
-    pricePerDay: 3500,
-    image:
-      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fGNhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=400",
-    model: "Sedan 2022",
-    provider: "Elite Rent Ltd.",
-    category: "Elite",
-    status: "Available",
-  };
+  const instanceSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const [cars, setCars] = useState([]);
+
+  useEffect(() => {
+    instanceSecure.get(`/myListings/${user?.email}`).then((result) => {
+      setCars(result.data);
+    });
+  }, [instanceSecure, user]);
   return (
     <section className="max-w-7xl mx-auto p-5">
       <div className="flex items-center justify-center">
@@ -35,60 +35,81 @@ const MyListings = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>1</th>
-              <td>
-                <img
-                  src={car.image}
-                  alt={car.name}
-                  className="w-14 h-10 object-cover rounded"
-                />
-              </td>
-              <td className="font-medium text-base">{car.name}</td>
-              <td className="font-medium text-base">{car.category}</td>
-              <td className="font-medium text-base">৳{car.pricePerDay}/day</td>
-              <td>
-                <div className={`badge badge-primary text-white`}>
-                  {car.status}
-                </div>
-              </td>
-              <td className="flex gap-3 items-center">
-                <Link
-                  to={`/editCar/${car.id}`}
-                  className="btn btn-outline btn-primary"
-                >
-                  Edit
-                </Link>
-                <button className="btn btn-outline btn-error">Delete</button>
-              </td>
-            </tr>
+            {cars.map((car, index) => (
+              <tr key={car._id}>
+                <th>{index + 1}</th>
+                <td>
+                  <img
+                    src={car.carImageUrl}
+                    alt={car.carName}
+                    className="w-14 h-10 object-cover rounded"
+                  />
+                </td>
+                <td className="font-medium text-base">{car.carName}</td>
+                <td className="font-medium text-base">{car.carCategory}</td>
+                <td className="font-medium text-base">৳{car.rentPrice}/day</td>
+                <td>
+                  <div
+                    className={`badge ${
+                      car.status ? "bg-green-600" : "bg-red-600"
+                    } text-white`}
+                  >
+                    {car.status ? "Available" : "Booked"}
+                  </div>
+                </td>
+                <td className="flex gap-3 items-center">
+                  <Link
+                    to={`/editCar/${car._id}`}
+                    className="btn btn-outline btn-primary"
+                  >
+                    Edit
+                  </Link>
+                  <button className="btn btn-outline btn-error">Delete</button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
       <div className="mt-10 lg:hidden grid md:grid-cols-2 gap-3">
-        <div className="flex flex-col sm:flex-row gap-2 justify-between sm:items-center">
-          <div className="flex items-center gap-2">
-            <img src={car.image} alt="" className="w-20 h-20 rounded-md" />
-            <div className="flex flex-col">
-              <h2 className="font-medium">{car.name}</h2>
-              <div className="flex gap-2 items-center">
-                <h2 className="text-base">{car.category}</h2>
-                <span className="badge badge-primary">{car.status}</span>
+        {cars.map((car) => (
+          <div
+            key={car._id}
+            className="flex flex-col sm:flex-row gap-2 justify-between sm:items-center"
+          >
+            <div className="flex items-center gap-2">
+              <img
+                src={car.carImageUrl}
+                alt=""
+                className="w-20 h-20 rounded-md"
+              />
+              <div className="flex flex-col">
+                <h2 className="font-medium">{car.carName}</h2>
+                <div className="flex gap-2 items-center">
+                  <h2 className="text-base">{car.carCategory}</h2>
+                  <span
+                    className={`badge ${
+                      car.status ? "bg-green-600" : "bg-red-600"
+                    } text-white`}
+                  >
+                    {car.status ? "Available" : "Booked"}
+                  </span>
+                </div>
+                <h2 className="text-sm">৳{car.rentPrice} / day</h2>
               </div>
-              <h2 className="text-sm">৳{car.pricePerDay} / day</h2>
+            </div>
+            <div className="flex flex-col gap-1">
+              <Link
+                to={`/editCar/${car._id}`}
+                className="btn btn-outline btn-primary"
+              >
+                Edit
+              </Link>
+              <button className="btn btn-outline btn-error">Delete</button>
             </div>
           </div>
-          <div className="flex flex-col gap-1">
-            <Link
-              to={`/editProduct/${car._id}`}
-              className="btn btn-outline btn-primary"
-            >
-              Edit
-            </Link>
-            <button className="btn btn-outline btn-error">Delete</button>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   );
