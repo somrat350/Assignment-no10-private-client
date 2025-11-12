@@ -9,20 +9,55 @@ import {
 import { FaLocationDot } from "react-icons/fa6";
 import { GrTextAlignLeft } from "react-icons/gr";
 import { MdEmail } from "react-icons/md";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useAxios from "../Hooks/useAxios";
 import { useEffect, useState } from "react";
+import useAuth from "../Hooks/useAuth";
+import { toast } from "react-toastify";
 
 const CarDetails = () => {
+  const { user } = useAuth();
   const instance = useAxios();
   const { id } = useParams();
   const [details, setDetails] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     instance.get(`/car/${id}`).then((result) => {
       setDetails(result.data);
     });
   }, [instance, id]);
+
+  const handleBooking = () => {
+    if (!details.status) {
+      toast.error("This car is booked. Please try another car.");
+      return;
+    }
+    const newBooking = {
+      carId: details._id,
+      carName: details.carName,
+      carImageUrl: details.carImageUrl,
+      carCategory: details.carCategory,
+      rentPrice: details.rentPrice,
+      bookingEmail: user.email,
+    };
+
+    instance.post("/newBooking", newBooking).then((result) => {
+      console.log(result);
+      if (result.data.insertedId) {
+        const updateCarStatus = { status: false };
+        instance
+          .patch(`/updateCar/${details._id}`, updateCarStatus)
+          .then((result) => {
+            console.log(result);
+            if (result.data.modifiedCount === 1) {
+              toast.success("Car booked successfully.");
+              navigate("/myBookings");
+            }
+          });
+      }
+    });
+  };
 
   return (
     <div className="max-w-7xl mx-auto p-5 my-5">
@@ -101,7 +136,9 @@ const CarDetails = () => {
                   <FaUserCircle className="text-4xl text-primary" />
                   <div>
                     <small className="block">Name</small>
-                    <strong className="break-all">{details.providerName}</strong>
+                    <strong className="break-all">
+                      {details.providerName}
+                    </strong>
                   </div>
                 </div>
               </div>
@@ -110,15 +147,22 @@ const CarDetails = () => {
                   <MdEmail className="text-4xl text-primary min-w-fit" />
                   <div>
                     <small className="block">Email</small>
-                    <strong className="break-all">{details.providerEmail}</strong>
+                    <strong className="break-all">
+                      {details.providerEmail}
+                    </strong>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <button className="btn btn-primary text-xl mt-5">
-            <FaCar /> Book Now
+          <button
+            onClick={handleBooking}
+            className={`btn ${
+              details.status ? "btn-primary" : "btn-error"
+            } text-xl text-white mt-5`}
+          >
+            <FaCar /> {details.status ? "Book Now" : "Booked"}
           </button>
         </div>
       </div>
