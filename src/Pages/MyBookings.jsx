@@ -1,17 +1,18 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import useAuth from "../Hooks/useAuth";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const MyBookings = () => {
-  const car = {
-    id: 1,
-    name: "Toyota Corolla",
-    pricePerDay: 3500,
-    image:
-      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fGNhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=400",
-    model: "Sedan 2022",
-    provider: "Elite Rent Ltd.",
-    category: "Elite",
-    status: "Available",
-  };
+  const instanceSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const [cars, setCars] = useState([]);
+
+  useEffect(() => {
+    instanceSecure.get(`/myBookings/${user?.email}`).then((result) => {
+      setCars(result.data);
+    });
+  }, [instanceSecure, user]);
+
   return (
     <section className="max-w-7xl mx-auto p-5">
       <div className="flex items-center justify-center">
@@ -32,40 +33,44 @@ const MyBookings = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>1</th>
-              <td>
-                <img
-                  src={car.image}
-                  alt={car.name}
-                  className="w-14 h-10 object-cover rounded"
-                />
-              </td>
-              <td className="font-medium text-base">{car.name}</td>
-              <td className="font-medium text-base">{car.category}</td>
-              <td className="font-medium text-base">৳{car.pricePerDay}/day</td>
-            </tr>
+            {cars.map((car, index) => (
+              <tr key={car._id}>
+                <th>{index + 1}</th>
+                <td>
+                  <img
+                    src={car.carImageUrl}
+                    alt={car.carName}
+                    className="w-14 h-10 object-cover rounded"
+                  />
+                </td>
+                <td className="font-medium text-base">{car.carName}</td>
+                <td className="font-medium text-base">{car.carCategory}</td>
+                <td className="font-medium text-base">৳{car.rentPrice}/day</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
       <div className="mt-10 grid grid-cols-2 gap-5 sm:hidden">
-        <div className="flex flex-col gap-2">
-          <div className="w-full h-36 rounded-xl overflow-hidden">
-            <img
-              src={car.image}
-              alt={car.name}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-            />
-          </div>
-          <div className="flex flex-col">
-            <h2 className="font-medium">{car.name}</h2>
-            <div className="flex gap-2 items-center">
-              <h2 className="text-base">{car.category}</h2>
+        {cars.map((car) => (
+          <div key={car._id} className="flex flex-col gap-2">
+            <div className="w-full h-36 rounded-xl overflow-hidden">
+              <img
+                src={car.carImageUrl}
+                alt={car.carName}
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
             </div>
-            <h2 className="text-sm">৳{car.pricePerDay} / day</h2>
+            <div className="flex flex-col">
+              <h2 className="font-medium">{car.carName}</h2>
+              <div className="flex gap-2 items-center">
+                <h2 className="text-base">{car.carCategory}</h2>
+              </div>
+              <h2 className="text-sm">৳{car.rentPrice} / day</h2>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </section>
   );
