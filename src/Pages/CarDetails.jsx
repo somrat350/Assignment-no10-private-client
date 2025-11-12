@@ -9,27 +9,38 @@ import {
 import { FaLocationDot } from "react-icons/fa6";
 import { GrTextAlignLeft } from "react-icons/gr";
 import { MdEmail } from "react-icons/md";
+import { useParams } from "react-router";
+import useAxios from "../Hooks/useAxios";
+import { useEffect, useState } from "react";
 
 const CarDetails = () => {
+  const instance = useAxios();
+  const { id } = useParams();
+  const [details, setDetails] = useState({});
+
+  useEffect(() => {
+    instance.get(`/car/${id}`).then((result) => {
+      setDetails(result.data);
+    });
+  }, [instance, id]);
+
   return (
     <div className="max-w-7xl mx-auto p-5 my-5">
       <div className="grid lg:grid-cols-3 gap-10 lg:gap-5">
         <div className="">
           <img
-            src="https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?t=st=1762826453~exp=1762830053~hmac=7b49ba91e8b966ccac300b30ef739f247a8b97cd069973ae1b3960eaf952a779&w=2000"
-            alt=""
+            src={details.carImageUrl}
+            alt={details.carName}
             className="w-full rounded-lg"
           />
         </div>
         <div className="lg:col-span-2">
           <div className="flex justify-between">
             <div className="">
-              <h2 className="text-2xl font-bold">
-                Lorem ipsum dolor sit amet.
-              </h2>
-              <p>Electric</p>
+              <h2 className="text-2xl font-bold">{details.carName}</h2>
+              <p>{details.carCategory}</p>
               <p className="flex items-center gap-1">
-                <FaStar className="text-amber-600" /> 4
+                <FaStar className="text-amber-600" /> {details.ratings}
               </p>
             </div>
           </div>
@@ -39,29 +50,33 @@ const CarDetails = () => {
               <h2 className="text-xl font-semibold text-primary flex items-center gap-2">
                 <FaTag /> Category
               </h2>
-              <p>Sedan / Hybrid</p>
+              <p>{details.carCategory}</p>
             </div>
             <div className="">
               <h2 className="text-xl font-semibold text-primary flex items-center gap-2">
                 <span>৳</span> Rent Price
               </h2>
               <p className="text-success font-bold">
-                ৳8500 <small className="">/ day</small>
+                ৳{details.rentPrice} <small className="">/ day</small>
               </p>
             </div>
             <div className="">
               <h2 className="text-xl font-semibold text-primary flex items-center gap-2">
                 <FaLocationDot /> Location
               </h2>
-              <p className="">Dhaka, Bangladesh</p>
+              <p className="">{details.location}</p>
             </div>
             <div className="">
               <h2 className="text-xl font-semibold text-primary flex items-center gap-2">
                 <FaInfoCircle /> Car Status
               </h2>
               <p className="mt-1">
-                <span className="badge badge-success text-white">
-                  Available
+                <span
+                  className={`badge ${
+                    details.status ? "bg-green-600" : "bg-red-600"
+                  } text-white`}
+                >
+                  {details.status ? "Available" : "Booked"}
                 </span>
               </p>
             </div>
@@ -71,13 +86,7 @@ const CarDetails = () => {
             <h2 className="text-xl font-semibold text-primary flex items-center gap-2">
               <GrTextAlignLeft /> Description
             </h2>
-            <p className="">
-              Experience luxury and efficiency with the{" "}
-              <strong>2024 Toyota Camry Hybrid SE</strong>. This premium sedan
-              combines a sleek design with cutting-edge hybrid technology,
-              delivering up to <strong>52 MPG</strong> in the city. Perfect for
-              business trips or family outings in Dhaka.
-            </p>
+            <p className="">{details.carDesc}</p>
           </div>
 
           <hr className="my-4"></hr>
@@ -92,7 +101,7 @@ const CarDetails = () => {
                   <FaUserCircle className="text-4xl text-primary" />
                   <div>
                     <small className="block">Name</small>
-                    <strong className="break-all">Rahim Khans</strong>
+                    <strong className="break-all">{details.providerName}</strong>
                   </div>
                 </div>
               </div>
@@ -101,9 +110,7 @@ const CarDetails = () => {
                   <MdEmail className="text-4xl text-primary min-w-fit" />
                   <div>
                     <small className="block">Email</small>
-                    <strong className="break-all">
-                      mdsomratsordaro350@gmail.com
-                    </strong>
+                    <strong className="break-all">{details.providerEmail}</strong>
                   </div>
                 </div>
               </div>
