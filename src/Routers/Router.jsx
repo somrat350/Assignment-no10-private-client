@@ -10,6 +10,7 @@ import Register from "../Pages/Register";
 import Error404 from "../Pages/Error404";
 import CarDetails from "../Pages/CarDetails";
 import PrivetRouter from "./PrivateRouter";
+import EditCar from "../Pages/EditCar";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRouter>
             <AddCar />
+          </PrivetRouter>
+        ),
+      },
+      {
+        path: "/editCar/:id",
+        element: (
+          <PrivetRouter>
+            <EditCar />
           </PrivetRouter>
         ),
       },
