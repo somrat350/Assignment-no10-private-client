@@ -2,7 +2,7 @@ import axios from "axios";
 import useAuth from "./useAuth";
 
 const instanceSecure = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://assignment-no10-private-server.vercel.app",
 });
 
 const useAxiosSecure = () => {
