@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import Loading from "../Components/Loading";
 
 const AddCar = () => {
   const { user, userLoading } = useAuth();
@@ -10,10 +11,12 @@ const AddCar = () => {
   const [carImg, setCarImg] = useState("");
   const [category, setCategory] = useState("Pick a type");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  if (userLoading) return;
+  if (userLoading || loading) return <Loading />;
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     const newCar = {
       carName: e.target.carName.value,
@@ -32,6 +35,7 @@ const AddCar = () => {
     instanceSecure
       .post("http://localhost:3000/newCar", newCar)
       .then((result) => {
+        setLoading(false);
         if (result.data.insertedId) {
           toast.success("New service created successfully.");
           navigate("/myListings");
@@ -42,7 +46,7 @@ const AddCar = () => {
     <section className="max-w-7xl mx-auto p-5">
       <div className="flex items-center justify-center">
         <h2 className="text-4xl font-bold text-center border-b-4 mb-5">
-          Create A New Car For Rent
+          Add A New Car For Rent
         </h2>
       </div>
 
@@ -160,7 +164,7 @@ const AddCar = () => {
           </div>
 
           <div className="col-span-full">
-            <button className="btn btn-primary w-full">Create A Car</button>
+            <button className="btn btn-primary w-full">Add A Car</button>
           </div>
         </div>
       </form>

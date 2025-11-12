@@ -4,6 +4,7 @@ import { MdEmail } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import useAuth from "../Hooks/useAuth";
+import Loading from "../Components/Loading";
 
 const Register = () => {
   const { user, userLoading, setUserLoading, createUG, createUEP, updateUser } =
@@ -23,7 +24,7 @@ const Register = () => {
     }
   }, [user, userLoading, navigate, from]);
 
-  if (userLoading) return <span>Loading...</span>;
+  if (userLoading) return <Loading />;
 
   const passwordValidate = (e) => {
     const tempPass = e.target.value;

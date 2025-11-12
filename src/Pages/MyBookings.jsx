@@ -17,7 +17,7 @@ const MyBookings = () => {
     <section className="max-w-7xl mx-auto p-5">
       <div className="flex items-center justify-center">
         <h2 className="text-4xl font-bold text-center border-b-4 mb-5">
-          My Bookings
+          My Bookings: {cars.length}
         </h2>
       </div>
 

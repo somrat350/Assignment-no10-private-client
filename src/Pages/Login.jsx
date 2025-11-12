@@ -4,6 +4,7 @@ import { MdEmail } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import useAuth from "../Hooks/useAuth";
+import Loading from "../Components/Loading";
 
 const Login = () => {
   const { user, userLoading, setUserLoading, loginUEP, createUG } = useAuth();
@@ -18,6 +19,8 @@ const Login = () => {
       navigate(from, { replace: true });
     }
   }, [user, userLoading, navigate, from]);
+
+  if (userLoading) return <Loading />;
 
   const handleSubmit = (e) => {
     e.preventDefault();

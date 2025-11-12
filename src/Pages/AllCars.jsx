@@ -1,17 +1,28 @@
 import { useEffect, useState } from "react";
 import CarCard from "../Components/CarCard";
 import useAxios from "../Hooks/useAxios";
+import Loading from "../Components/Loading";
 
 const AllCars = () => {
   const instance = useAxios();
   const [cars, setCars] = useState([]);
   const [src, setSrc] = useState("");
+  const [load, setLoad] = useState(false);
 
   useEffect(() => {
     instance.get("/allCars").then((result) => {
       setCars(result.data);
     });
   }, [instance]);
+
+  useEffect(() => {
+    if (src === "") {
+      return;
+    }
+    setLoad(true);
+    const timer = setTimeout(() => setLoad(false), 300);
+    return () => clearTimeout(timer);
+  }, [src]);
 
   const normalize = (text = "") =>
     text.trim().replace(/\s+/g, " ").toLowerCase();
@@ -62,11 +73,19 @@ const AllCars = () => {
           />
         </label>
       </div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
-        {finalCars.map((car) => (
-          <CarCard key={car._id} car={car} />
-        ))}
-      </div>
+      {load ? (
+        <Loading />
+      ) : finalCars.length === 0 ? (
+        <h2 data-aos="fade-up" className="mt-10 text-center font-bold text-2xl">
+          Search not matched!
+        </h2>
+      ) : (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
+          {finalCars.map((car) => (
+            <CarCard key={car._id} car={car} />
+          ))}
+        </div>
+      )}
     </section>
   );
 };
