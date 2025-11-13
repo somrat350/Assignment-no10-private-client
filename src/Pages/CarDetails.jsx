@@ -24,7 +24,7 @@ const CarDetails = () => {
   const instance = useAxios();
   const instanceSecure = useAxiosSecure();
   const { id } = useParams();
-  const [details, setDetails] = useState({});
+  const [details, setDetails] = useState(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [isConfirmed, setIsConfirmed] = useState(false);
