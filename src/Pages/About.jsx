@@ -4,6 +4,7 @@ import { FaShield } from "react-icons/fa6";
 const About = () => {
   return (
     <>
+      <title>About | RentWheels</title>
       {/* Hero Section */}
       <section className="relative bg-primary text-white py-24">
         <div className="absolute inset-0 bg-black opacity-40"></div>
@@ -23,9 +24,7 @@ const About = () => {
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold mb-6">
-                Our Mission
-              </h2>
+              <h2 className="text-4xl font-bold mb-6">Our Mission</h2>
               <p className="text-lg text-gray-500 leading-relaxed mb-6">
                 To provide hassle-free, transparent, and customer-focused car
                 rental services that empower travelers to explore with
@@ -93,15 +92,15 @@ const About = () => {
       {/* Team / Why Choose Us */}
       <section className="py-20 max-w-7xl mx-auto">
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl font-bold mb-12">
-            Why Choose RentWheels?
-          </h2>
+          <h2 className="text-4xl font-bold mb-12">Why Choose RentWheels?</h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <FaCar className="w-8 h-8 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-black">Wide Selection</h3>
+              <h3 className="text-xl font-semibold mb-3 text-black">
+                Wide Selection
+              </h3>
               <p className="text-gray-500">
                 From economy to luxury — find the perfect car for every journey.
               </p>
@@ -110,7 +109,9 @@ const About = () => {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <FaUser className="w-8 h-8 text-green-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-black">Customer First</h3>
+              <h3 className="text-xl font-semibold mb-3 text-black">
+                Customer First
+              </h3>
               <p className="text-gray-500">
                 Transparent pricing, no surprises, and dedicated support.
               </p>
@@ -119,7 +120,9 @@ const About = () => {
               <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <FaClock className="w-8 h-8 text-purple-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-black">Instant Booking</h3>
+              <h3 className="text-xl font-semibold mb-3 text-black">
+                Instant Booking
+              </h3>
               <p className="text-gray-500">
                 Reserve in seconds. Pick up in minutes. Drive away happy.
               </p>

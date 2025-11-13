@@ -21,6 +21,7 @@ const Contact = () => {
   };
   return (
     <>
+      <title>Contact | RentWheels</title>
       {/* Hero Section */}
       <section className="relative bg-primary text-white py-24">
         <div className="absolute inset-0 bg-black opacity-40"></div>

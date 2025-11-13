@@ -75,6 +75,7 @@ const CarDetails = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-5 my-5">
+      <title>{`${details ? `${details.carName}` : ""} | RentWheels`}</title>
       <dialog id="my_modal_2" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h2 className="text-2xl font-bold text-green-500">Car booked!</h2>
