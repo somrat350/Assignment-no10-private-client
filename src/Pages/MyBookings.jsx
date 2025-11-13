@@ -40,7 +40,6 @@ const MyBookings = () => {
     instanceSecure
       .patch(`/updateCar/${rateCar}`, updateCarRatings)
       .then((result) => {
-        console.log(result);
         if (result.data.modifiedCount === 1) {
           toast.success("Rate gave successfully.");
           document.getElementById("my_modal_5").close();
@@ -58,13 +57,11 @@ const MyBookings = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, remove it!",
     }).then((toastResult) => {
-      console.log(toastResult);
       if (toastResult.isConfirmed) {
         const updateCarStatus = { status: true };
         instanceSecure
           .patch(`/updateCar/${carId}`, updateCarStatus)
           .then((result) => {
-            console.log(result);
             if (result.data.modifiedCount === 1) {
               instanceSecure.delete(`/deleteBookedCar/${id}`).then((result) => {
                 if (result.data.deletedCount > 0) {

@@ -8,7 +8,6 @@ import Loading from "./Components/Loading";
 const Root = () => {
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(true);
-  console.log(location);
 
   useEffect(() => {
     setShowLoader(true);

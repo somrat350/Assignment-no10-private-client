@@ -51,13 +51,11 @@ const CarDetails = () => {
     };
 
     instanceSecure.post("/newBooking", newBooking).then((result) => {
-      console.log(result);
       if (result.data.insertedId) {
         const updateCarStatus = { status: false };
         instanceSecure
           .patch(`/updateCar/${details._id}`, updateCarStatus)
           .then((result) => {
-            console.log(result);
             if (result.data.modifiedCount === 1) {
               setIsConfirmed(true);
               document.getElementById("my_modal_2").showModal();

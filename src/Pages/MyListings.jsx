@@ -28,7 +28,6 @@ const MyListings = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((toastResult) => {
-      console.log(toastResult);
       if (toastResult.isConfirmed) {
         instanceSecure.delete(`/deleteCar/${id}`).then((result) => {
           if (result.data.deletedCount > 0) {
