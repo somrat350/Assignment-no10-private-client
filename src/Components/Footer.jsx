@@ -17,7 +17,7 @@ const Footer = () => {
             </h1>
           </div>
           {/* LINKS */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-5">
             <Link to="/" className="hover:text-[#642ee3] duration-200">
               Home
             </Link>
@@ -27,17 +27,14 @@ const Footer = () => {
             <Link to="/contact" className="hover:text-[#642ee3] duration-200">
               Contact
             </Link>
-            <Link to="/terms" className="hover:text-[#642ee3] duration-200">
-              Terms
-            </Link>
-            <Link to="/faq" className="hover:text-[#642ee3] duration-200">
-              FAQ
-            </Link>
           </div>
           {/* SOCIAL */}
           <div className="flex items-center gap-3">
             <div className="rounded-full p-1 border border-white hover:scale-110 duration-200">
-              <Link to="https://www.facebook.com/profile.php?id=61564941795910" target="_blank">
+              <Link
+                to="https://www.facebook.com/profile.php?id=61564941795910"
+                target="_blank"
+              >
                 <FaFacebook />
               </Link>
             </div>

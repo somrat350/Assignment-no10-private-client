@@ -11,6 +11,8 @@ import Error404 from "../Pages/Error404";
 import CarDetails from "../Pages/CarDetails";
 import PrivetRouter from "./PrivateRouter";
 import EditCar from "../Pages/EditCar";
+import About from "../Pages/About";
+import Contact from "../Pages/Contact";
 
 export const router = createBrowserRouter([
   {
@@ -72,6 +74,14 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         Component: Register,
+      },
+      {
+        path: "/about",
+        Component: About,
+      },
+      {
+        path: "/contact",
+        Component: Contact,
       },
       {
         path: "/*",
