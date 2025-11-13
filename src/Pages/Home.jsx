@@ -1,4 +1,5 @@
 import HeroSlider from "../Components/HeroSlider";
+import HowItWorks from "../Components/HowItWorks";
 import NewestCars from "../Components/NewestCars";
 import Testimonials from "../Components/Testimonials";
 import TopRatedCars from "../Components/TopRatedCars";
@@ -11,6 +12,7 @@ const Home = () => {
       <NewestCars />
       <WhyRent />
       <TopRatedCars />
+      <HowItWorks />
       <Testimonials />
     </div>
   );
