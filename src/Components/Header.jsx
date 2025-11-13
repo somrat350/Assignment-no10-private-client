@@ -56,7 +56,7 @@ const Header = () => {
       ) : user ? (
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="m-1 cursor-pointer">
-            <img src="/user.png" alt="" className="w-10 h-10 cursor-pointer" />
+            <img src={user?.photoURL} alt="" className="w-10 h-10 rounded-full cursor-pointer" />
           </div>
           <ul
             tabIndex="-1"
