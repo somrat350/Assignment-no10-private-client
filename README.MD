@@ -6,8 +6,8 @@ Welcome to **RentalWheels**, a modern and responsive web application offering re
 
 ## 🌐 Live Demo
 
-👉 **Live Website:** [RentalWheels](https://assignment-no9-private.web.app/)  
-👉 **GitHub Repository:** [View on GitHub](https://github.com/programming-hero-web-course2/b12-a9-firesheild-somrat350)
+👉 **Live Website:** [RentalWheels](https://assignment-no10-private.web.app/)  
+👉 **GitHub Repository:** [View on GitHub](https://github.com/somrat350/Assignment-no10-private-client)
 
 ---
 
