@@ -29,6 +29,7 @@ const EditCar = () => {
   if (userLoading) return;
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     const updateCar = {
       carName: e.target.carName.value,
@@ -41,6 +42,7 @@ const EditCar = () => {
     };
 
     instanceSecure.patch(`/updateCar/${id}`, updateCar).then((result) => {
+      setLoading(false);
       if (result.data.modifiedCount > 0) {
         toast.success("Car updated successfully.");
         navigate("/myListings");

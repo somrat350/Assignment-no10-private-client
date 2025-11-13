@@ -26,6 +26,8 @@ const MyBookings = () => {
   };
 
   const handleSubmit = (e) => {
+    setLoading(true);
+    document.getElementById("my_modal_5").close();
     e.preventDefault();
     const ratingMap = {
       "Very Bad": 1,
@@ -40,9 +42,9 @@ const MyBookings = () => {
     instanceSecure
       .patch(`/updateCar/${rateCar}`, updateCarRatings)
       .then((result) => {
+        setLoading(false);
         if (result.data.modifiedCount === 1) {
           toast.success("Rate gave successfully.");
-          document.getElementById("my_modal_5").close();
         }
       });
   };
@@ -58,12 +60,14 @@ const MyBookings = () => {
       confirmButtonText: "Yes, remove it!",
     }).then((toastResult) => {
       if (toastResult.isConfirmed) {
+        setLoading(true);
         instanceSecure.delete(`/deleteBookedCar/${id}`).then((result) => {
           if (result.data.deletedCount > 0) {
             const updateCarStatus = { status: true };
             instanceSecure
               .patch(`/updateCar/${carId}`, updateCarStatus)
               .then((result) => {
+                setLoading(false);
                 if (result.data.modifiedCount > 0) {
                   const remainingCar = cars.filter((car) => car._id !== id);
                   setCars(remainingCar);

@@ -37,6 +37,7 @@ const CarDetails = () => {
   }, [instance, id]);
 
   const handleBooking = () => {
+    setLoading(true);
     if (!details.status) {
       toast.error("This car is booked. Please try another car.");
       return;
@@ -57,6 +58,7 @@ const CarDetails = () => {
           .patch(`/updateCar/${details._id}`, updateCarStatus)
           .then((result) => {
             if (result.data.modifiedCount === 1) {
+              setLoading(false);
               setIsConfirmed(true);
               document.getElementById("my_modal_2").showModal();
               setTimeout(() => {

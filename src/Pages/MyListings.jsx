@@ -29,7 +29,9 @@ const MyListings = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((toastResult) => {
       if (toastResult.isConfirmed) {
+        setLoading(true);
         instanceSecure.delete(`/deleteCar/${id}`).then((result) => {
+          setLoading(false);
           if (result.data.deletedCount > 0) {
             const remainingCar = cars.filter((car) => car._id !== id);
             setCars(remainingCar);
