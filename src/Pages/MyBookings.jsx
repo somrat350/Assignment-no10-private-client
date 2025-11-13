@@ -10,6 +10,8 @@ const MyBookings = () => {
   const { user } = useAuth();
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [rate, setRate] = useState("Excellent");
+  const [rateCar, setRateCar] = useState("");
 
   useEffect(() => {
     instanceSecure.get(`/myBookings/${user?.email}`).then((result) => {
@@ -19,7 +21,31 @@ const MyBookings = () => {
   }, [instanceSecure, user]);
 
   const handleRate = (carId) => {
-    toast(carId);
+    document.getElementById("my_modal_5").showModal();
+    setRateCar(carId);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const ratingMap = {
+      "Very Bad": 1,
+      Bad: 2,
+      Okay: 3,
+      Good: 4,
+      Excellent: 5,
+    };
+
+    const updateCarRatings = { ratings: ratingMap[rate] };
+
+    instanceSecure
+      .patch(`/updateCar/${rateCar}`, updateCarRatings)
+      .then((result) => {
+        console.log(result);
+        if (result.data.modifiedCount === 1) {
+          toast.success("Rate gave successfully.");
+          document.getElementById("my_modal_5").close();
+        }
+      });
   };
 
   const handleRemove = (id, carId) => {
@@ -155,6 +181,35 @@ const MyBookings = () => {
           </div>
         </>
       )}
+
+      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <div className="flex flex-col gap-2">
+              <label className="label">Rate this car</label>
+              <select
+                required
+                className="select border-gray-500 w-full"
+                defaultValue={rate}
+                onChange={(e) => setRate(e.target.value)}
+              >
+                <option>Very Bad</option>
+                <option>Bad</option>
+                <option>Okay</option>
+                <option>Good</option>
+                <option>Excellent</option>
+              </select>
+            </div>
+            <button className="btn btn-primary">Submit</button>
+          </form>
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn">Cancel</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </section>
   );
 };
