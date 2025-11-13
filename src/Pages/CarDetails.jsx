@@ -16,6 +16,8 @@ import useAuth from "../Hooks/useAuth";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import Loading from "../Components/Loading";
+import Lottie from "lottie-react";
+import successAnimation from "../assets/success.json";
 
 const CarDetails = () => {
   const { user } = useAuth();
@@ -25,6 +27,7 @@ const CarDetails = () => {
   const [details, setDetails] = useState({});
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
   useEffect(() => {
     instance.get(`/car/${id}`).then((result) => {
@@ -56,8 +59,14 @@ const CarDetails = () => {
           .then((result) => {
             console.log(result);
             if (result.data.modifiedCount === 1) {
-              toast.success("Car booked successfully.");
-              navigate("/myBookings");
+              setIsConfirmed(true);
+              document.getElementById("my_modal_2").showModal();
+              setTimeout(() => {
+                setIsConfirmed(false);
+                document.getElementById("my_modal_2").close();
+                toast.success("Car booked successfully.");
+                navigate("/myBookings");
+              }, 2000);
             }
           });
       }
@@ -66,6 +75,19 @@ const CarDetails = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-5 my-5">
+      <dialog id="my_modal_2" className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+          <h2 className="text-2xl font-bold text-green-500">Car booked!</h2>
+          {isConfirmed && (
+            <Lottie
+              animationData={successAnimation}
+              loop={false}
+              style={{ width: 300, margin: "0 auto" }}
+            />
+          )}
+        </div>
+      </dialog>
+
       {loading ? (
         <Loading />
       ) : !details ? (
