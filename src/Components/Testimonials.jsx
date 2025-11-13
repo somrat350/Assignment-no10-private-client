@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Navigation } from "swiper/modules";
+import HeroText from "./HeroText";
 
 const Testimonials = () => {
   const testimonials = [
@@ -65,11 +66,17 @@ const Testimonials = () => {
     },
   ];
 
+  const texts = [
+    "What Our Customers Say",
+    "What People Say About Us",
+    "Real Stories, Real Smiles",
+  ];
+
   return (
     <section className="mt-20">
       <div className="flex items-center justify-center">
         <h2 className="text-4xl font-bold text-center border-b-4">
-          What Our Customers Say
+          <HeroText texts={texts} />
         </h2>
       </div>
 

@@ -1,9 +1,16 @@
+import HeroText from "./HeroText";
+
 const WhyRent = () => {
+  const texts = [
+    "Why Rent With Us?",
+    "Why Choose Our Service?",
+    "Why Partner With Us?",
+  ];
   return (
     <section className="mt-20">
       <div className="flex items-center justify-center">
         <h2 className="text-4xl font-bold text-center border-b-4 mb-5">
-          Why Rent With Us?
+          <HeroText texts={texts} />
         </h2>
       </div>
       <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-5 text-center">

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useAxios from "../Hooks/useAxios";
 import CarCard from "./CarCard";
 import Loading from "./Loading";
+import HeroText from "./HeroText";
 
 const TopRatedCars = () => {
   const instance = useAxios();
@@ -14,11 +15,18 @@ const TopRatedCars = () => {
       setLoading(false);
     });
   }, [instance]);
+
+  const texts = [
+    "Customer Favorite Cars",
+    "Top Rated Cars",
+    "Top Reviewed Vehicles",
+  ];
+
   return (
     <section className="mt-20">
       <div className="flex items-center justify-center">
         <h2 className="text-4xl font-bold text-center border-b-4 mb-5">
-          Top Rated Cars
+          <HeroText texts={texts} />
         </h2>
       </div>
       {loading ? (
