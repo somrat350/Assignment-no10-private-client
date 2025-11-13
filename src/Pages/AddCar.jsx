@@ -32,15 +32,13 @@ const AddCar = () => {
       providerEmail: user?.email,
     };
 
-    instanceSecure
-      .post("http://localhost:3000/newCar", newCar)
-      .then((result) => {
-        setLoading(false);
-        if (result.data.insertedId) {
-          toast.success("New service created successfully.");
-          navigate("/myListings");
-        }
-      });
+    instanceSecure.post("/newCar", newCar).then((result) => {
+      setLoading(false);
+      if (result.data.insertedId) {
+        toast.success("New service created successfully.");
+        navigate("/myListings");
+      }
+    });
   };
   return (
     <section className="max-w-7xl mx-auto p-5">

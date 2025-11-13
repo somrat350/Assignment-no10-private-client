@@ -58,13 +58,13 @@ const MyBookings = () => {
       confirmButtonText: "Yes, remove it!",
     }).then((toastResult) => {
       if (toastResult.isConfirmed) {
-        const updateCarStatus = { status: true };
-        instanceSecure
-          .patch(`/updateCar/${carId}`, updateCarStatus)
-          .then((result) => {
-            if (result.data.modifiedCount === 1) {
-              instanceSecure.delete(`/deleteBookedCar/${id}`).then((result) => {
-                if (result.data.deletedCount > 0) {
+        instanceSecure.delete(`/deleteBookedCar/${id}`).then((result) => {
+          if (result.data.deletedCount > 0) {
+            const updateCarStatus = { status: true };
+            instanceSecure
+              .patch(`/updateCar/${carId}`, updateCarStatus)
+              .then((result) => {
+                if (result.data.modifiedCount > 0) {
                   const remainingCar = cars.filter((car) => car._id !== id);
                   setCars(remainingCar);
                   Swal.fire({
@@ -74,8 +74,8 @@ const MyBookings = () => {
                   });
                 }
               });
-            }
-          });
+          }
+        });
       }
     });
   };
