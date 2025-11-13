@@ -4,6 +4,7 @@ import { HiXMark } from "react-icons/hi2";
 import { Link, NavLink } from "react-router";
 import ThemeToggler from "./ThemeToggler";
 import useAuth from "../Hooks/useAuth";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -56,7 +57,11 @@ const Header = () => {
       ) : user ? (
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="m-1 cursor-pointer">
-            <img src={user?.photoURL} alt="" className="w-10 h-10 rounded-full cursor-pointer" />
+            <img
+              src={user?.photoURL}
+              alt=""
+              className="w-10 h-10 rounded-full cursor-pointer"
+            />
           </div>
           <ul
             tabIndex="-1"
@@ -71,7 +76,10 @@ const Header = () => {
             <li>
               <span className="block">
                 <button
-                  onClick={logout}
+                  onClick={() => {
+                    logout();
+                    toast.success("Logged out successfully.");
+                  }}
                   className="btn btn-error text-white w-full"
                 >
                   Log Out
