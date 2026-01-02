@@ -24,7 +24,7 @@ const HowItWorks = () => {
   ];
   const texts = ["How it works", "Step by Step", "How We Make It Simple"];
   return (
-    <section className="py-20 max-w-7xl mx-auto">
+    <section className="py-20  mx-auto">
       <div className="flex items-center justify-center">
         <h2 className="text-4xl font-bold text-center border-b-4 mb-5">
           <HeroText texts={texts} />

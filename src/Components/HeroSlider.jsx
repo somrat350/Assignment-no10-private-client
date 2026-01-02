@@ -50,7 +50,7 @@ const HeroSlider = () => {
             <div className="p-5 flex flex-col-reverse sm:flex-row gap-3 sm:gap-10 items-center justify-center">
               <div className="flex-1 flex flex-col gap-4 max-w-md">
                 <h2 className="text-3xl font-semibold">{slider.carName}</h2>
-                <p className="text-lg font-medium line-clamp-3">
+                <p className="text-lg line-clamp-3">
                   {slider.carDesc}
                 </p>
                 <Link to={`/car/${slider._id}`} className="btn btn-primary">

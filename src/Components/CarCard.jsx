@@ -9,7 +9,7 @@ const CarCard = ({ car }) => {
         <img
           src={car.carImageUrl}
           alt={car.carName}
-          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover hover:scale-110 transition-transform duration-400"
         />
         <span
           className={`text-white font-medium ${
@@ -43,7 +43,10 @@ const CarCard = ({ car }) => {
 
       {/* Button */}
       <div className="mt-4">
-        <Link to={`/car/${car._id}`} className="btn btn-primary w-full">
+        <Link
+          to={`/car/${car._id}`}
+          className="btn btn-outline btn-primary w-full"
+        >
           View Details
         </Link>
       </div>

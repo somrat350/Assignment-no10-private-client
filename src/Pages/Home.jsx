@@ -7,7 +7,7 @@ import WhyRent from "../Components/WhyRent";
 
 const Home = () => {
   return (
-    <div className="max-w-7xl mx-auto p-5">
+    <div className="max-w-360 mx-auto p-5">
       <title>Home | RentWheels</title>
       <HeroSlider />
       <NewestCars />

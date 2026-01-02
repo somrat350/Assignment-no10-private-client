@@ -4,7 +4,8 @@ import { HiXMark } from "react-icons/hi2";
 import { Link, NavLink } from "react-router";
 import ThemeToggler from "./ThemeToggler";
 import useAuth from "../Hooks/useAuth";
-import { toast } from "react-toastify";
+import { MdLogout } from "react-icons/md";
+import Swal from "sweetalert2";
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -25,6 +26,29 @@ const Header = () => {
     );
   }, [theme]);
 
+  const logoutHandler = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to access your activity!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, logout!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logout();
+        Swal.fire({
+          title: "Logged out!",
+          text: "You have been logged out.",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  };
+
   const middleMenu = (
     <>
       <NavLink to="/" className="text-base font-medium navLink">
@@ -33,7 +57,18 @@ const Header = () => {
       <NavLink to="/allCars" className="text-base font-medium navLink">
         Browse Cars
       </NavLink>
-      <NavLink to="/addCar" className="text-base font-medium navLink">
+      <NavLink to="/about" className="text-base font-medium navLink">
+        About
+      </NavLink>
+      <NavLink to="/contact" className="text-base font-medium navLink">
+        Contact
+      </NavLink>
+      {user && (
+        <NavLink to="/dashboard" className="text-base font-medium navLink">
+          Dashboard
+        </NavLink>
+      )}
+      {/* <NavLink to="/addCar" className="text-base font-medium navLink">
         Add Car
       </NavLink>
       <NavLink to="/myListings" className="text-base font-medium navLink">
@@ -41,7 +76,7 @@ const Header = () => {
       </NavLink>
       <NavLink to="/myBookings" className="text-base font-medium navLink">
         My Bookings
-      </NavLink>
+      </NavLink> */}
       <div className="flex justify-end sm:hidden">
         <ThemeToggler theme={theme} setTheme={setTheme} />
       </div>
@@ -59,32 +94,52 @@ const Header = () => {
           <div tabIndex={0} role="button" className="m-1 cursor-pointer">
             <img
               src={user?.photoURL}
-              alt=""
               className="w-10 h-10 rounded-full cursor-pointer"
             />
           </div>
           <ul
             tabIndex="-1"
-            className="dropdown-content menu bg-base-100 rounded-box z-1 w-fit p-2 shadow-sm"
+            className="dropdown-content menu bg-base-300 rounded-box z-1 w-fit p-2 shadow-sm border-3 border-primary"
           >
+            <div className="flex flex-col items-center justify-center gap-1 p-2 mb-4">
+              <img src={user?.photoURL} className="w-20 h-20 rounded-full" />
+              <h2 className="text-xl font-medium">{user?.displayName}</h2>
+              <p className="text-balance">{user?.email}</p>
+              <Link to="/dashboard/profile" className="btn btn-primary">
+                View Profile
+              </Link>
+            </div>
             <li>
-              <span>{user?.displayName}</span>
+              <Link
+                to="/dashboard"
+                className="border-b border-gray-500 font-medium text-base"
+              >
+                Dashboard
+              </Link>
             </li>
             <li>
-              <span>{user?.email}</span>
+              <Link
+                to="/dashboard/myListings"
+                className="border-b border-gray-500 font-medium text-base"
+              >
+                My Listings
+              </Link>
             </li>
             <li>
-              <span className="block">
-                <button
-                  onClick={() => {
-                    logout();
-                    toast.success("Logged out successfully.");
-                  }}
-                  className="btn btn-error text-white w-full"
-                >
-                  Log Out
-                </button>
-              </span>
+              <Link
+                to="/dashboard/myBookings"
+                className="border-b border-gray-500 font-medium text-base"
+              >
+                My Bookings
+              </Link>
+            </li>
+            <li className="mt-4 flex items-end">
+              <button
+                onClick={logoutHandler}
+                className="w-fit btn text-red-500"
+              >
+                Logout <MdLogout />
+              </button>
             </li>
           </ul>
         </div>
@@ -93,15 +148,15 @@ const Header = () => {
           to="/login"
           className="btn btn-primary hover:scale-110 transition-all duration-200 font-medium text-sm"
         >
-          Login/Signup
+          Login
         </Link>
       )}
     </>
   );
   return (
-    <header className="shadow-xl sticky top-0 z-20 backdrop-blur-3xl">
-      <div className="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center relative">
-        <div className="flex items-center gap-2 sm:gap-3">
+    <header className="shadow-xl sticky top-0 z-20 bg-base-200">
+      <div className="max-w-360 mx-auto px-5 py-4 flex justify-between items-center relative">
+        <div className="flex items-center gap-4">
           <HiMenuAlt1
             onClick={() => setOpenMenu(true)}
             className="lg:hidden cursor-pointer text-2xl font-bold"

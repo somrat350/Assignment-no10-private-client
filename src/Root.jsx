@@ -12,7 +12,7 @@ const Root = () => {
   useEffect(() => {
     setShowLoader(true);
     let timer;
-    timer = setTimeout(() => setShowLoader(false), 500);
+    timer = setTimeout(() => setShowLoader(false), 300);
     return () => clearTimeout(timer);
   }, [location.pathname]);
 

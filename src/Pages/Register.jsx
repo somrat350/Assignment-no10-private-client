@@ -99,7 +99,7 @@ const Register = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-5 flex items-center justify-center">
+    <div className="max-w-360 mx-auto p-5 flex items-center justify-center">
       <title>Register | RentWheels</title>
       <div className="w-full max-w-3xl mx-auto rounded-2xl overflow-hidden ">
         <div className="flex flex-col sm:flex-row gap-2 bg-indigo-100">

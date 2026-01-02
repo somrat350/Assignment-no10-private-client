@@ -20,7 +20,7 @@ const About = () => {
       </section>
 
       {/* Mission & Values */}
-      <section className="py-20 max-w-7xl mx-auto">
+      <section className="py-20 max-w-360 mx-auto">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -66,7 +66,7 @@ const About = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 max-w-7xl mx-auto">
+      <section className="py-16 max-w-360 mx-auto">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
@@ -90,7 +90,7 @@ const About = () => {
       </section>
 
       {/* Team / Why Choose Us */}
-      <section className="py-20 max-w-7xl mx-auto">
+      <section className="py-20 max-w-360 mx-auto">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold mb-12">Why Choose RentWheels?</h2>
           <div className="grid md:grid-cols-3 gap-8">

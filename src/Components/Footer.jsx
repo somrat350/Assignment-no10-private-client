@@ -5,7 +5,7 @@ import { Link } from "react-router";
 const Footer = () => {
   return (
     <footer className="bg-[#101214] text-white">
-      <div className="max-w-7xl mx-auto p-5">
+      <div className="max-w-360 mx-auto p-5">
         <div className="flex flex-col md:flex-row gap-5 justify-between items-center">
           {/* LOGO */}
           <div className="flex items-center gap-2">
@@ -31,32 +31,22 @@ const Footer = () => {
           {/* SOCIAL */}
           <div className="flex items-center gap-3">
             <div className="rounded-full p-1 border border-white hover:scale-110 duration-200">
-              <Link
-                to="https://www.facebook.com/profile.php?id=61564941795910"
+              <a href="https://www.facebook.com/somrat350/" target="_blank">
+                <FaFacebook />
+              </a>
+            </div>
+            <div className="rounded-full p-1 border border-white hover:scale-110 duration-200">
+              <a
+                href="https://www.linkedin.com/in/osamabin-somrat"
                 target="_blank"
               >
-                <FaFacebook />
-              </Link>
-            </div>
-            <div className="rounded-full p-1 border border-white hover:scale-110 duration-200">
-              <Link to="" target="_blank">
-                <FaXTwitter />
-              </Link>
-            </div>
-            <div className="rounded-full p-1 border border-white hover:scale-110 duration-200">
-              <Link to="" target="_blank">
-                <FaInstagram />
-              </Link>
-            </div>
-            <div className="rounded-full p-1 border border-white hover:scale-110 duration-200">
-              <Link to="" target="_blank">
                 <FaLinkedin />
-              </Link>
+              </a>
             </div>
             <div className="rounded-full p-1 border border-white hover:scale-110 duration-200">
-              <Link to="" target="_blank">
+              <a href="https://github.com/somrat350" target="_blank">
                 <FaGithub />
-              </Link>
+              </a>
             </div>
           </div>
         </div>

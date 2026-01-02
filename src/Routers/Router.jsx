@@ -29,11 +29,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/car/:id",
-        element: (
-          <PrivetRouter>
-            <CarDetails />
-          </PrivetRouter>
-        ),
+        Component: CarDetails,
       },
       {
         path: "/addCar",

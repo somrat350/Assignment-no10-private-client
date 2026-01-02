@@ -85,7 +85,7 @@ const MyBookings = () => {
   };
 
   return (
-    <section className="max-w-7xl mx-auto p-5">
+    <section className="max-w-360 mx-auto p-5">
       <title>My bookings | RentWheels</title>
       <div className="flex items-center justify-center">
         <h2 className="text-4xl font-bold text-center border-b-4 mb-5">

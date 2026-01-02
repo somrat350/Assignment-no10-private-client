@@ -37,11 +37,11 @@ const CarDetails = () => {
   }, [instance, id]);
 
   const handleBooking = () => {
-    setLoading(true);
     if (!details.status) {
       toast.error("This car is booked. Please try another car.");
       return;
     }
+    setLoading(true);
     const newBooking = {
       carId: details._id,
       carName: details.carName,
@@ -74,7 +74,7 @@ const CarDetails = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-5 my-5">
+    <div className="max-w-360 mx-auto p-5 my-5">
       <title>{`${details ? `${details.carName}` : ""} | RentWheels`}</title>
       <dialog id="my_modal_2" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
