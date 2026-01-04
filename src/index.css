@@ -30,6 +30,9 @@
   width: 100%;
 }
 
+.dashNavLink.active {
+  @apply text-primary;
+}
 
 /* Base style for next & prev buttons */
 .swiper-button-next,

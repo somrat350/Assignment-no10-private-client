@@ -37,6 +37,11 @@ const CarDetails = () => {
   }, [instance, id]);
 
   const handleBooking = () => {
+    if (!user) {
+      toast.info("Please login to book this car.");
+      navigate("/auth/login");
+      return;
+    }
     if (!details.status) {
       toast.error("This car is booked. Please try another car.");
       return;

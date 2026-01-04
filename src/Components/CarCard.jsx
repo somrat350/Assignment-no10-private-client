@@ -3,13 +3,13 @@ import { Link } from "react-router";
 
 const CarCard = ({ car }) => {
   return (
-    <div className="shadow-xl rounded-2xl p-4 hover:shadow-2xl hover:-translate-y-4 transition-all duration-400">
+    <div className="shadow-xl rounded-2xl p-4 hover:shadow-2xl hover:-translate-y-4 transition-all duration-400 group">
       {/* Car Image */}
       <div className="w-full h-48 rounded-xl overflow-hidden relative">
         <img
           src={car.carImageUrl}
           alt={car.carName}
-          className="w-full h-full object-cover hover:scale-110 transition-transform duration-400"
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-400"
         />
         <span
           className={`text-white font-medium ${
@@ -21,7 +21,7 @@ const CarCard = ({ car }) => {
       </div>
 
       {/* Car Info */}
-      <div className="mt-4 space-y-2">
+      <div className="mt-4 flex flex-col gap-2 justify-between">
         <h3 className="text-xl font-semibold">{car.carName}</h3>
         <div className="flex justify-between items-center">
           <p className="text-lg font-medium text-primary">
@@ -31,11 +31,11 @@ const CarCard = ({ car }) => {
         </div>
 
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2 text-gray-500">
+          <div className="flex items-center gap-1 text-gray-500">
             <FaCar size={18} /> <span>{car.carCategory}</span>
           </div>
 
-          <div className="flex items-center gap-2 text-gray-500">
+          <div className="flex items-center gap-1 text-gray-500">
             <FaUser size={18} /> <span>{car.providerName}</span>
           </div>
         </div>

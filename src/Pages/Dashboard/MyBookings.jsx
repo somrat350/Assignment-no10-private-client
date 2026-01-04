@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import useAuth from "../Hooks/useAuth";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
-import Loading from "../Components/Loading";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Loading from "../../Components/Loading";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 

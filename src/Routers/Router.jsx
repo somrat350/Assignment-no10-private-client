@@ -2,17 +2,18 @@ import { createBrowserRouter } from "react-router";
 import Root from "../Root";
 import Home from "../Pages/Home";
 import AllCars from "../Pages/AllCars";
-import AddCar from "../Pages/AddCar";
-import MyListings from "../Pages/MyListings";
-import MyBookings from "../Pages/MyBookings";
-import Login from "../Pages/Login";
-import Register from "../Pages/Register";
 import Error404 from "../Pages/Error404";
 import CarDetails from "../Pages/CarDetails";
 import PrivetRouter from "./PrivateRouter";
-import EditCar from "../Pages/EditCar";
 import About from "../Pages/About";
 import Contact from "../Pages/Contact";
+import DashboardHome from "../Pages/Dashboard/DashboardHome";
+import Profile from "../Pages/Dashboard/Profile";
+import AuthLayout from "../Layouts/AuthLayout";
+import Login from "../Pages/Auth/Login";
+import Register from "../Pages/Auth/Register";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import MyListings from "../Pages/Dashboard/MyListings";
 
 export const router = createBrowserRouter([
   {
@@ -32,46 +33,6 @@ export const router = createBrowserRouter([
         Component: CarDetails,
       },
       {
-        path: "/addCar",
-        element: (
-          <PrivetRouter>
-            <AddCar />
-          </PrivetRouter>
-        ),
-      },
-      {
-        path: "/editCar/:id",
-        element: (
-          <PrivetRouter>
-            <EditCar />
-          </PrivetRouter>
-        ),
-      },
-      {
-        path: "/myListings",
-        element: (
-          <PrivetRouter>
-            <MyListings />
-          </PrivetRouter>
-        ),
-      },
-      {
-        path: "/myBookings",
-        element: (
-          <PrivetRouter>
-            <MyBookings />
-          </PrivetRouter>
-        ),
-      },
-      {
-        path: "/login",
-        Component: Login,
-      },
-      {
-        path: "/register",
-        Component: Register,
-      },
-      {
         path: "/about",
         Component: About,
       },
@@ -82,6 +43,46 @@ export const router = createBrowserRouter([
       {
         path: "/*",
         Component: Error404,
+      },
+    ],
+  },
+  {
+    path: "/auth",
+    Component: AuthLayout,
+    children: [
+      {
+        index: true,
+        Component: Login,
+      },
+      {
+        path: "login",
+        Component: Login,
+      },
+      {
+        path: "register",
+        Component: Register,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivetRouter>
+        <DashboardLayout />
+      </PrivetRouter>
+    ),
+    children: [
+      {
+        index: true,
+        Component: DashboardHome,
+      },
+      {
+        path: "profile",
+        Component: Profile,
+      },
+      {
+        path: "myListings",
+        Component: MyListings,
       },
     ],
   },

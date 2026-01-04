@@ -30,7 +30,23 @@ const TopRatedCars = () => {
         </h2>
       </div>
       {loading ? (
-        <Loading />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 bg-[#101214]/20 p-5 rounded-lg">
+          {[...new Array(6)].map((_, index) => (
+            <div key={index} className="flex w-full flex-col gap-4">
+              <div className="skeleton h-48 w-full"></div>
+              <div className="skeleton h-4 w-full"></div>
+              <div className="flex items-center justify-between gap-5 w-full">
+                <div className="skeleton h-4 w-full"></div>
+                <div className="skeleton h-4 w-full"></div>
+              </div>
+              <div className="flex items-center justify-between gap-5 w-full">
+                <div className="skeleton h-4 w-full"></div>
+                <div className="skeleton h-4 w-full"></div>
+              </div>
+              <div className="skeleton h-8 w-full"></div>
+            </div>
+          ))}
+        </div>
       ) : cars.length === 0 ? (
         <h2 className="mt-10 text-center font-bold text-2xl">
           Data not found!

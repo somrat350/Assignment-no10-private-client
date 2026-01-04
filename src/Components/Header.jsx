@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { HiXMark } from "react-icons/hi2";
 import { Link, NavLink } from "react-router";
@@ -10,21 +10,6 @@ import Swal from "sweetalert2";
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const { user, userLoading, logout } = useAuth();
-
-  const get = localStorage.getItem("assignment-no10-private-theme");
-  const getTheme = JSON.parse(get ? get : "false");
-
-  const [theme, setTheme] = useState(getTheme);
-
-  useEffect(() => {
-    document
-      .querySelector("html")
-      .setAttribute("data-theme", theme ? "dark" : "light");
-    localStorage.setItem(
-      "assignment-no10-private-theme",
-      JSON.stringify(theme)
-    );
-  }, [theme]);
 
   const logoutHandler = () => {
     Swal.fire({
@@ -78,14 +63,14 @@ const Header = () => {
         My Bookings
       </NavLink> */}
       <div className="flex justify-end sm:hidden">
-        <ThemeToggler theme={theme} setTheme={setTheme} />
+        <ThemeToggler />
       </div>
     </>
   );
   const rightMenu = (
     <>
       <div className="hidden sm:flex justify-center">
-        <ThemeToggler theme={theme} setTheme={setTheme} />
+        <ThemeToggler />
       </div>
       {userLoading ? (
         ""
@@ -99,7 +84,7 @@ const Header = () => {
           </div>
           <ul
             tabIndex="-1"
-            className="dropdown-content menu bg-base-300 rounded-box z-1 w-fit p-2 shadow-sm border-3 border-primary"
+            className="dropdown-content menu bg-base-300 rounded-box z-1 min-w-64 w-fit p-2 shadow-sm border-3 border-primary"
           >
             <div className="flex flex-col items-center justify-center gap-1 p-2 mb-4">
               <img src={user?.photoURL} className="w-20 h-20 rounded-full" />
@@ -145,7 +130,7 @@ const Header = () => {
         </div>
       ) : (
         <Link
-          to="/login"
+          to="/auth/login"
           className="btn btn-primary hover:scale-110 transition-all duration-200 font-medium text-sm"
         >
           Login

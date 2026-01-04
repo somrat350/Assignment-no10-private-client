@@ -1,54 +1,38 @@
 import { useEffect, useState } from "react";
 import CarCard from "../Components/CarCard";
 import useAxios from "../Hooks/useAxios";
-import Loading from "../Components/Loading";
 
 const AllCars = () => {
   const instance = useAxios();
   const [cars, setCars] = useState([]);
   const [src, setSrc] = useState("");
   const [load, setLoad] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalCars, setTotalCars] = useState(0);
+  const limit = 12;
+  const skip = currentPage * limit;
+  const totalPages = Math.ceil(totalCars / limit);
 
   useEffect(() => {
-    instance.get("/allCars").then((result) => {
-      setCars(result.data);
-      setLoad(false);
-    });
-  }, [instance]);
-
-  useEffect(() => {
-    if (src === "") {
-      return;
-    }
-    setLoad(true);
-    const timer = setTimeout(() => setLoad(false), 300);
-    return () => clearTimeout(timer);
-  }, [src]);
-
-  const normalize = (text = "") =>
-    text.trim().replace(/\s+/g, " ").toLowerCase();
-
-  const finalCars = cars.filter((car) => {
-    const term = normalize(src);
-    return (
-      normalize(car.carName).includes(term) ||
-      normalize(car.carCategory).includes(term) ||
-      normalize(car.carDesc).includes(term)
-    );
-  });
+    instance
+      .get(`/allCars?limit=${limit}&skip=${skip}&src=${src}`)
+      .then((result) => {
+        setCars(result.data.result);
+        setTotalCars(result.data.total);
+        setLoad(false);
+      });
+  }, [instance, limit, skip, src]);
 
   return (
     <section className="max-w-360 mx-auto p-5">
       <title>Our all cars | RentWheels</title>
-      <div className="flex items-center justify-center">
-        <h2 className="text-4xl font-bold text-center border-b-4 mb-5">
+      <div className="flex items-center justify-center my-5">
+        <h2 className="text-4xl font-bold text-center border-b-4">
           Our All Cars
         </h2>
       </div>
       <div className="flex flex-col sm:flex-row justify-between items-center mt-5 gap-3">
-        <h2 className="text-2xl font-semibold">
-          Total Cars ({finalCars.length})
-        </h2>
+        <h2 className="text-2xl font-semibold">Total Cars ({cars.length})</h2>
         <label className="input border-gray-500">
           <svg
             className="h-[1em] opacity-50"
@@ -69,25 +53,82 @@ const AllCars = () => {
           <input
             type="search"
             required
-            placeholder="Search"
+            placeholder="Search car by name or type"
             value={src}
-            onChange={(e) => setSrc(e.target.value)}
+            onChange={(e) => {
+              setSrc(e.target.value);
+              setLoad(true);
+            }}
           />
         </label>
       </div>
       {load ? (
-        <Loading />
-      ) : finalCars.length === 0 ? (
+        <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 bg-[#101214]/20 p-5 rounded-lg">
+          {[...new Array(6)].map((_, index) => (
+            <div key={index} className="flex w-full flex-col gap-4">
+              <div className="skeleton h-48 w-full"></div>
+              <div className="skeleton h-4 w-full"></div>
+              <div className="flex items-center justify-between gap-5 w-full">
+                <div className="skeleton h-4 w-full"></div>
+                <div className="skeleton h-4 w-full"></div>
+              </div>
+              <div className="flex items-center justify-between gap-5 w-full">
+                <div className="skeleton h-4 w-full"></div>
+                <div className="skeleton h-4 w-full"></div>
+              </div>
+              <div className="skeleton h-8 w-full"></div>
+            </div>
+          ))}
+        </div>
+      ) : cars.length === 0 ? (
         <h2 className="mt-10 text-center font-bold text-2xl">
           Data not found!
         </h2>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
-          {finalCars.map((car) => (
+          {cars.map((car) => (
             <CarCard key={car._id} car={car} />
           ))}
         </div>
       )}
+      <div className="flex justify-center flex-wrap gap-3 py-5 mt-10">
+        {currentPage > 0 && (
+          <button
+            onClick={() => {
+              setCurrentPage(currentPage - 1);
+              setLoad(true);
+            }}
+            className="btn hover:border-primary"
+          >
+            Prev
+          </button>
+        )}
+        {[...Array(totalPages).keys()].map((i) => (
+          <button
+            key={i + 1}
+            onClick={() => {
+              setCurrentPage(i);
+              setLoad(true);
+            }}
+            className={`btn hover:border-primary ${
+              currentPage === i && "btn-primary"
+            }`}
+          >
+            {i + 1}
+          </button>
+        ))}
+        {currentPage + 1 < totalPages && (
+          <button
+            onClick={() => {
+              setCurrentPage(currentPage + 1);
+              setLoad(true);
+            }}
+            className="btn hover:border-primary"
+          >
+            Next
+          </button>
+        )}
+      </div>
     </section>
   );
 };

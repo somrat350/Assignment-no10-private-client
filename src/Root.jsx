@@ -1,9 +1,9 @@
 import { Outlet, useLocation } from "react-router";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
-import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
 import Loading from "./Components/Loading";
+import ThemeToggler from "./Components/ThemeToggler";
 
 const Root = () => {
   const location = useLocation();
@@ -19,14 +19,15 @@ const Root = () => {
   if (showLoader) {
     return (
       <div className="h-screen flex items-center">
-        <ToastContainer />
+        <div className="hidden">
+          <ThemeToggler />
+        </div>
         <Loading />
       </div>
     );
   }
   return (
     <div className="flex flex-col min-h-screen">
-      <ToastContainer />
       <Header />
       <div className="grow">
         <Outlet />
