@@ -1,8 +1,12 @@
+import CTA from "../Components/Cta";
+import FAQ from "../Components/Faq";
 import HeroSlider from "../Components/HeroSlider";
 import HowItWorks from "../Components/HowItWorks";
 import NewestCars from "../Components/NewestCars";
+import Newsletter from "../Components/Newsletter";
 import Testimonials from "../Components/Testimonials";
 import TopRatedCars from "../Components/TopRatedCars";
+import TripCostEstimator from "../Components/TripCostEstimator";
 import WhyRent from "../Components/WhyRent";
 
 const Home = () => {
@@ -15,6 +19,10 @@ const Home = () => {
       <TopRatedCars />
       <HowItWorks />
       <Testimonials />
+      <CTA />
+      <FAQ />
+      <Newsletter />
+      <TripCostEstimator />
     </div>
   );
 };
